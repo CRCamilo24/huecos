@@ -14,7 +14,7 @@ export default function UserLogged() {
     const navigation= useNavigation()
 
     const [loading, setLoading] = useState(false)
-    const [loadingText, setLoadingText] = useState()
+    const [loadingText, setLoadingText] = useState("")
     const [user, setUser] = useState(null)
 
     useEffect(() => {
