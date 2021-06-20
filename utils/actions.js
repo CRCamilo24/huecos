@@ -5,15 +5,20 @@ import 'firebase/firestore';
 import { fileToBlob } from './helpers'
 
 
+
+
+
+
+
 const db = firebase.firestore(firebaseApp)
+
 
 export const isUserLogged = () => {
     let isLogged = false
     firebase.auth().onAuthStateChanged((user) => {
         user !== null && (isLogged = true)
     })
-    return isLogged
-    
+    return isLogged    
 }
 
 export const getCurrentUser = () => {
@@ -34,6 +39,7 @@ export const registerUser = async(email, password) => {
     }
     return result
 }
+
 export const loginWithEmailAndPassword = async(email, password) => {
     const result = { statusResponse: true, error: null}
     try {
@@ -44,6 +50,7 @@ export const loginWithEmailAndPassword = async(email, password) => {
     }
     return result
 }
+
 export const uploadImage = async(image, path, name) => {
     const result = { statusResponse: false, error: null, url: null }
     const ref = firebase.storage().ref(path).child(name)
@@ -70,6 +77,7 @@ export const updateProfile = async(data) => {
     }
     return result     
 }
+
 export const reauthenticate = async(password) => {
     const result = { statusResponse: true, error: null }
     const user = getCurrentUser()
@@ -83,6 +91,7 @@ export const reauthenticate = async(password) => {
     }
     return result     
 }
+
 export const updateEmail = async(email) => {
     const result = { statusResponse: true, error: null }
     try {
@@ -93,6 +102,7 @@ export const updateEmail = async(email) => {
     }
     return result     
 }
+
 export const updatePassword = async(password) => {
     const result = { statusResponse: true, error: null }
     try {

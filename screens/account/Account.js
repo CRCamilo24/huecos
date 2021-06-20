@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { getCurrentUser } from '../../utils/actions'
 import { useFocusEffect } from '@react-navigation/native'
 import Loading from '../../components/Loading'

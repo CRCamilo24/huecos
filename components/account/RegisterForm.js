@@ -5,7 +5,7 @@ import { size } from 'lodash'
 import { useNavigation } from '@react-navigation/native'
 
 import { validateEmail } from '../../utils/helpers'
-import { registerUser } from '../../utils/actions'
+import { getCurrentUser, registerUser } from '../../utils/actions'
 import Loading from '../Loading'
 
 export default function RegisterForm() {
@@ -29,15 +29,24 @@ export default function RegisterForm() {
         
         setLoading(true)
         const result = await registerUser(formData.email, formData.password)
-        setLoading(false)
         if (!result.statusResponse){
+            setLoading(false)
             setErrorEmail(result.error)
             return
         }
+
         navigation.navigate("account")
     }
           
-
+        
+    
+    
+    
+    
+    
+    
+    
+    
         const validateData = () => {
             setErrorConfirm("")
             setErrorEmail("")
@@ -48,6 +57,7 @@ export default function RegisterForm() {
                 setErrorEmail("Debes de ingresar un email válido.")
                 isValid = false
             }
+
             if(size(formData.password) < 6) {
                 setErrorPassword("Debes ingresar una contraseña de al menos seis carácteres.")
                 isValid = false
@@ -67,7 +77,6 @@ export default function RegisterForm() {
             return isValid
         }
     
-
     return (
         <View style={styles.form}>
             <Input
@@ -76,8 +85,7 @@ export default function RegisterForm() {
                 onChange={(e) => onChange(e, "email")}
                 keyboardType="email-address"
                 errorMessage={errorEmail}
-                defaultValue={formData.email}
-                
+                defaultValue={formData.email}    
             />
             <Input
                 containerStyle={styles.input}
