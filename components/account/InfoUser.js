@@ -7,12 +7,12 @@ import { loadImageFromGallery } from '../../utils/helpers'
 
 
 export default function InfoUser({ user, setLoading, setLoadingText }) {
-    console.log(user)
+    //console.log(user)
     const [photoUrl, setPhotoUrl] = useState(user.photoURL)
 
     const changePhoto = async() => {
         const result = await loadImageFromGallery([1, 1])
-        console.log(result)
+        //console.log(result)
         if (!result.status) {
             return
         }

@@ -3,9 +3,9 @@ import { StyleSheet, Text, ScrollView, Image } from 'react-native'
 import { Button } from 'react-native-elements'
 import { useNavigation } from '@react-navigation/native'
 
-
 export default function UserGuest() {
     const navigation = useNavigation()
+    
     return (
         <ScrollView
             centerContent
@@ -23,10 +23,8 @@ export default function UserGuest() {
             <Button
                 buttonStyle={styles.button}
                 title="Ingresar"
-                onPress={() => navigation.navigate("login")}
-                
-            />
-                       
+                onPress={() => navigation.navigate("login")}    
+            />               
         </ScrollView>
     )
 }
