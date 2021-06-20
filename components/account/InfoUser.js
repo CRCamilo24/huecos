@@ -1,15 +1,13 @@
 import React, { useState } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { Alert, StyleSheet, Text, View } from 'react-native'
 import { Avatar } from 'react-native-elements'
 
 import { updateProfile, uploadImage } from '../../utils/actions'
 import { loadImageFromGallery } from '../../utils/helpers'
 
-
 export default function InfoUser({ user, setLoading, setLoadingText }) {
     //console.log(user)
     const [photoUrl, setPhotoUrl] = useState(user.photoURL)
-
     const changePhoto = async() => {
         const result = await loadImageFromGallery([1, 1])
         //console.log(result)
@@ -38,7 +36,7 @@ export default function InfoUser({ user, setLoading, setLoadingText }) {
                 rounded
                 size="large"
                 onPress = { changePhoto }
-                containerStyle={styles.Avatar}
+                //containerStyle={styles.Avatar}
                 source={
                     user.photoUrl 
                         ? { uri: photoUrl }
@@ -56,8 +54,6 @@ export default function InfoUser({ user, setLoading, setLoadingText }) {
         </View>
     )
 }
-
-
 const styles = StyleSheet.create({
     container: {
         alignItems: "center",
