@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, {useState} from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { ListItem, Icon } from 'react-native-elements'
 import { map } from 'lodash';
@@ -8,7 +8,7 @@ import ChangeDisplayNameForm from './ChangeDisplayNameForm';
 import ChangeEmailForm from './ChangeEmailForm';
 import ChangePasswordForm from './ChangePasswordForm';
 
-export default function AccountOptions({ user, toastRef, setRelodUser }) {
+export default function AccountOptions({user, toastRef, setRelodUser}) {
     const [showModal, setShowModal] = useState(false)
     const [renderComponent, setRenderComponent] = useState(null)
 
@@ -40,8 +40,9 @@ export default function AccountOptions({ user, toastRef, setRelodUser }) {
             },
         ]
     }
-
+    
     const selectedComponent = (key) => {
+        console.log(key)
         switch (key) {
             case "displayName":
                 setRenderComponent(
@@ -68,13 +69,13 @@ export default function AccountOptions({ user, toastRef, setRelodUser }) {
                     <ChangePasswordForm
                         setShowModal={setShowModal}
                         toastRef={toastRef}
-                    />
+                    /> 
                 )
                 break;
         }
         setShowModal(true)
     }
-
+   
     const menuOptions = generateOptions();
 
     return (
@@ -84,8 +85,8 @@ export default function AccountOptions({ user, toastRef, setRelodUser }) {
                     <ListItem
                         key={index}
                         style={styles.menuItem}
-                        onPress={menu.onPress}
-                    >
+                        onPress = {menu.onPress}
+                        >
                         <Icon
                             type="material-community"
                             name={menu.iconNameLeft}

@@ -25,6 +25,7 @@ export default function LoginForm() {
         if (!validateData()) {
             return;
         }
+
         setLoading(true)
         const result = await loginWithEmailAndPassword(formData.email, formData.password)
         setLoading(false)
@@ -34,9 +35,10 @@ export default function LoginForm() {
             setErrorPassword(result.error)
             return
         }
-        navigation.navigate("account")
 
+        navigation.navigate("account")
     }
+
     const validateData = () => {
         setErrorEmail("")
         setErrorPassword("")
@@ -46,6 +48,7 @@ export default function LoginForm() {
             setErrorEmail("Debes de ingresar un email válido.")
             isValid = false
         }
+
         if (isEmpty(formData.password)) {
             setErrorPassword("Debes de ingresar tu contraseña.")
             isValid = false
@@ -54,8 +57,8 @@ export default function LoginForm() {
         return isValid
     }
 
-    return (
-        
+
+    return (  
         <View style={styles.container}>
             <Input
                 containerStyle={styles.input}
