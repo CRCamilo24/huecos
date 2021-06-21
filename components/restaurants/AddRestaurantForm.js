@@ -4,8 +4,10 @@ import { Avatar, Image, Icon, Input, Button } from 'react-native-elements'
 import CountryPicker from 'react-native-country-picker-modal'
 import { map, size, filter, isEmpty } from 'lodash' 
 import MapView from 'react-native-maps'
+import uuid from 'random-uuid-v4'
 
 import { getCurrentLocation, loadImageFromGallery, validateEmail } from '../../utils/helpers'
+import { addDocumentWithoutId, getCurrentUser, uploadImage } from '../../utils/actions'
 import Modal from '../../components/Modal'
 
 const widthScreen = Dimensions.get("window").width
@@ -22,14 +24,48 @@ export default function AddRestaurantForm({toastRef, setLoading, navigation}) {
     const [isVisibleMap, setIsVisibleMap] = useState(false)
     const [locationRestaurant, setLocationRestaurant] = useState(null)
 
-    const addRestaurant= () => {
+    const addRestaurant= async() => {
         //console.log(formData)
         if (!validForm()) {
             return
     }
-    console.log("YEAH")
-}
-const validForm = () => {
+    setLoading(true)
+    const responseUploadImages = await uploadImages()
+    //console.log(response)
+    const restaurant = {
+        address: formData.address,
+        description: formData.description,
+        email: formData.email,
+        barrio: formData.barrio,
+        callingCode: formData.callingCode,
+        location: locationRestaurant,
+        images: responseUploadImages,
+        createBy: getCurrentUser().uid
+    }
+    const responseAddDocument = await addDocumentWithoutId("restaurants", restaurant)
+    setLoading(false)
+    //console.log("YEAH")
+
+    if(!responseAddDocument.statusResponse) {
+        toastRef.current.show("Error al grabar el restaurante, por favor intenta mas tarde", 3000)
+        return
+    }
+        navigation.navigate("restaurants")
+    }
+    const uploadImages = async()=>{
+    const imagesUrl = []
+    await Promise.all(
+        map (imagesSelected, async(image) => {
+            const response = await uploadImage(image, "restaurants", uuid())
+            if (response.statusResponse){
+                imagesUrl.push(response.url)
+            }
+        })
+    )
+    return imagesUrl
+    }
+
+    const validForm = () => {
     clearErrors ()
     let isValid = true
 
@@ -44,14 +80,14 @@ const validForm = () => {
     }
 
     if (isEmpty(formData.barrio)) {
-        setErrorBarrio("Debes ingresar un barrio.")
+        setErrorBarrio("Debes ingresar el barrio.")
         isValid = false
     }
 
     if (!validateEmail(formData.email)) {
         setErrorEmail("Debes ingresar un email de restaurante válido.")
         isValid = false
-    }
+    } 
 
     if (size(formData.phone) < 10) {
         setErrorPhone("Debes ingresar un teléfono de restaurante válido.")
@@ -103,7 +139,6 @@ const clearErrors = () => {
                 toastRef={toastRef}
                 imagesSelected={imagesSelected}
                 setImagesSelected={setImagesSelected}
-                locationRestaurant={locationRestaurant}
             />
             <Button
                 title="Crear Restaurante"
@@ -233,7 +268,7 @@ function UploadImage({toastRef, imagesSelected, setImagesSelected}) {
             style={styles.viewImages}
         >
             {
-                size(imagesSelected) < 3 && (
+                size(imagesSelected) < 1 && (
                     <Icon
                         type="material-community"
                         name="camera"
@@ -302,7 +337,7 @@ function FormAdd({
            <Input
                 placeholder="Barrio del restaurante..."
                 defaultValue={formData.barrio}
-                onChange={(e) => onChange(e, "Barrio")}
+                onChange={(e) => onChange(e, "barrio")}
                 errorMessage={errorBarrio}
             />
             {/* cambiar por Barrio */}
