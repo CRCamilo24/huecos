@@ -75,35 +75,35 @@ export default function AddRestaurantForm({toastRef, setLoading, navigation}) {
     } */
 
     if (isEmpty(formData.address)) {
-        setErrorAddress("Debes ingresar la dirección del restaurante.")
+        setErrorAddress("Debes ingresar la zona en la que se encuentra el reporte.")
         isValid = false
     }
 
     if (isEmpty(formData.barrio)) {
-        setErrorBarrio("Debes ingresar el barrio.")
+        setErrorBarrio("Debes ingresar la zona del reporte.")
         isValid = false
     }
 
     if (!validateEmail(formData.email)) {
-        setErrorEmail("Debes ingresar un email de restaurante válido.")
+        setErrorEmail("Debes ingresar un email válido.")
         isValid = false
     } 
 
     if (size(formData.phone) < 10) {
-        setErrorPhone("Debes ingresar un teléfono de restaurante válido.")
+        setErrorPhone("Debes ingresar un teléfono válido.")
         isValid = false
     }
 
     if (isEmpty(formData.description)) {
-        setErrorDescription("Debes ingresar una descripción del restaurante.")
+        setErrorDescription("Debes ingresar una descripción del reporte.")
         isValid = false
     }
 
     if (!locationRestaurant) {
-        toastRef.current.show("Debes de localizar el restaurante en el mapa.", 3000)
+        toastRef.current.show("Debes de localizar el reporte en el mapa.", 3000)
         isValid = false
     } else if(size(imagesSelected) === 0) {
-        toastRef.current.show("Debes de agregar al menos una imagen al restaurante.", 3000)
+        toastRef.current.show("Debes de agregar al menos una imagen al reporte.", 3000)
         isValid = false
     }
 
@@ -141,7 +141,7 @@ const clearErrors = () => {
                 setImagesSelected={setImagesSelected}
             />
             <Button
-                title="Crear Restaurante"
+                title="Crear Reporte"
                 onPress={addRestaurant}
                 buttonStyle={styles.btnAddRestaurant}
             />
@@ -321,9 +321,9 @@ function FormAdd({
                 onChange={(e) => onChange(e, "name")}
                 errorMessage={errorName}
             />*/}
-            <Text>NOMBRE RESTAURANTE</Text>
+            <Text>FORMULARIO PARA REALIZAR REPORTE</Text>
             <Input
-                placeholder="Dirección del restaurante..."
+                placeholder="Dirección del reporte..."
                 defaultValue={formData.address}
                 onChange={(e) => onChange(e, "address")}
                 errorMessage={errorAddress}
@@ -335,7 +335,7 @@ function FormAdd({
                 }}
             />
            <Input
-                placeholder="Barrio del restaurante..."
+                placeholder="Zona del reporte..."
                 defaultValue={formData.barrio}
                 onChange={(e) => onChange(e, "barrio")}
                 errorMessage={errorBarrio}
@@ -343,7 +343,7 @@ function FormAdd({
             {/* cambiar por Barrio */}
             <Input
                 keyboardType="email-address"
-                placeholder="Email del restaurante..."
+                placeholder="Email del usuario..."
                 defaultValue={formData.email}
                 onChange={(e) => onChange(e, "email")}
                 errorMessage={errorEmail}
@@ -369,7 +369,7 @@ function FormAdd({
                 />
                 {/* PARA MODIFICAR NO VA */}
                 <Input
-                    placeholder="WhatsApp restaurante..."
+                    placeholder="WhatsApp..."
                     keyboardType="phone-pad"
                     containerStyle={styles.inputPhone}
                     defaultValue={formData.phone}
@@ -377,7 +377,7 @@ function FormAdd({
                     errorMessage={errorPhone}
                 />
                 <Input
-                    placeholder="Descripción restaurante..."
+                    placeholder="Descripción del reporte..."
                     multiline
                     containerStyle={styles.textArea}
                     defaultValue={formData.description}

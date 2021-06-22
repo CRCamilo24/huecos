@@ -20,7 +20,7 @@ export default function Navigation(){
             case "favorites":
                 iconName = "heart-outline"
                 break;
-            case "top-restaurants":
+            case "restaurants":
                 iconName = "star-outline"
                 break;
             case "search":
@@ -60,7 +60,7 @@ export default function Navigation(){
                 <Tab.Screen
                     name="restaurants"
                     component={RestaurantsStack}
-                    options={{ title: "Restaurants" }}
+                    options={{ title: "Reportes" }}
                 />
                 <Tab.Screen
                     name="favorites"

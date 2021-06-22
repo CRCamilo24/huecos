@@ -20,7 +20,7 @@ export default function Restaurants({ navigation }) {
 
     return (
         <View style={styles.viewBody}>
-            <Text>Restaurantes...</Text>
+            <Text>Reportes...</Text>
             {
                 user && (
                     <Icon
