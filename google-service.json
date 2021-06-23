@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "419454009226",
+    "project_id": "valorizacionapp",
+    "storage_bucket": "valorizacionapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:419454009226:android:8c3ff59509a85f47ad1273",
+        "android_client_info": {
+          "package_name": "com.valorizacionapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "419454009226-t6cls7pag073dqib4lh0ep64dcujrpk2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDrRMduojAU286LteSaltbPvORIf8zZ-So"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "419454009226-t6cls7pag073dqib4lh0ep64dcujrpk2.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "419454009226-fss5ib8gondgj6ni0bkbf3nctpg4vd79.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.valorizacionapp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

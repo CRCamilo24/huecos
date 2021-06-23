@@ -43,7 +43,7 @@ export default function Navigation(){
     return (
         <NavigationContainer>
             <Tab.Navigator 
-                initialRouteName="search"
+                initialRouteName="account"
                 tabBarOptions={{
                     inactiveTintColor: "#a17dc3",
                     activeTintColor: "#442484" 
@@ -56,6 +56,7 @@ export default function Navigation(){
                     name="search"
                     component={SearchStack}
                     options={{ title: "Noticias" }}
+                    
                 />
                 <Tab.Screen
                     name="restaurants"

@@ -28,6 +28,7 @@ export default function LoginForm() {
 
         setLoading(true)
         const result = await loginWithEmailAndPassword(formData.email, formData.password)
+  
         setLoading(false)
 
         if (!result.statusResponse){

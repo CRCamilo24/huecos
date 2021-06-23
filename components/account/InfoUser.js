@@ -26,10 +26,13 @@ export default function InfoUser({ user, setLoading, setLoadingText }) {
         setLoading(false)
         if (resultUpdateProfie.statusResponse) {
             setPhotoUrl(resultUploadImage.url)
+            console.log('resultUploadImage.url:',resultUploadImage.url)
         } else {
             Alert.alert("Ha ocurrido un error al actualizar la foto de perfil.")
         }
     }
+    console.log('user.photoUrl :',user.photoURL )
+
     return (
         <View style={styles.container}>
             <Avatar
@@ -38,7 +41,7 @@ export default function InfoUser({ user, setLoading, setLoadingText }) {
                 onPress = { changePhoto }
                 //containerStyle={styles.Avatar}
                 source={
-                    user.photoUrl 
+                    user.photoURL 
                         ? { uri: photoUrl }
                         : require("../../assets/avatar-default.jpg")
                 }

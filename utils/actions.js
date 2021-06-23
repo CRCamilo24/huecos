@@ -35,6 +35,7 @@ export const registerUser = async(email, password) => {
         await firebase.auth().createUserWithEmailAndPassword(email, password)
     } catch (error) {
         result.statusResponse = false
+        console.log('error:',error)
         result.error = "Este correo ya ha sido registrado."
     }
     return result
