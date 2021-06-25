@@ -5713,6 +5713,11 @@
   "resolved" "https://registry.npmjs.org/react-refresh/-/react-refresh-0.4.3.tgz"
   "version" "0.4.3"
 
+"react-sweet-state@^2.5.2":
+  "integrity" "sha512-iMEhwhJSAOpfdgpHfWX/W4JcLyc7fvfaeACsCiDpn+xXrVGrncHTLeKiNHqPHhEpRZHJLmKIleFal6KrL8ZpMw=="
+  "resolved" "https://registry.npmjs.org/react-sweet-state/-/react-sweet-state-2.5.2.tgz"
+  "version" "2.5.2"
+
 "react-timer-mixin@^0.13.4":
   "integrity" "sha512-4+ow23tp/Tv7hBM5Az5/Be/eKKF7DIvJ09voz5LyHGQaqqz9WV8YMs31eFvcYQs7d451LSg7kDJV70XYN/Ug/Q=="
   "resolved" "https://registry.npmjs.org/react-timer-mixin/-/react-timer-mixin-0.13.4.tgz"
