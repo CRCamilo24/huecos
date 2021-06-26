@@ -1,4 +1,5 @@
 import { createStore, createHook } from "react-sweet-state";
+import { firebaseApp } from "../../utils/firebase";
 
 const initialState = {
   authUser: null,
@@ -14,6 +15,12 @@ const actions = {
         loading: false,
       });
     },
+
+  // signInWithEmailAndPassword:
+  //   ({ email, password }) =>
+  //   async () => {
+  //     await firebaseApp.auth().signInWithEmailAndPassword(email, password);
+  //   },
 };
 
 const Store = createStore({
