@@ -1,10 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import { Alert, ScrollView, StyleSheet } from "react-native";
 import { loadImageFromGallery } from "../../../utils/helpers";
 import { Avatar, Icon } from "react-native-elements";
 import { filter, map, size } from "lodash";
+import TakePhoto from "./TakePhoto";
 
-function UploadImage({ toastRef, imagesSelected, setImagesSelected }) {
+function UploadImage({
+  toastRef,
+  imagesSelected,
+  setImagesSelected,
+  navigation,
+}) {
+  const [showCamera, setShowCamera] = useState(false);
+
   const imageSelect = async () => {
     const response = await loadImageFromGallery([4, 3]);
     if (!response.status) {
@@ -36,25 +44,39 @@ function UploadImage({ toastRef, imagesSelected, setImagesSelected }) {
     );
   };
   return (
-    <ScrollView horizontal style={styles.viewImages}>
-      {size(imagesSelected) < 1 && (
+    <>
+      <ScrollView horizontal style={styles.viewImages}>
+        {size(imagesSelected) < 1 && (
+          <Icon
+            type="material-community"
+            name="image"
+            color="#7a7a7a"
+            containerStyle={styles.containerIcon}
+            onPress={imageSelect}
+          />
+        )}
         <Icon
           type="material-community"
           name="camera"
           color="#7a7a7a"
           containerStyle={styles.containerIcon}
-          onPress={imageSelect}
+          onPress={() => setShowCamera(true)}
         />
-      )}
-      {map(imagesSelected, (imageReport, index) => (
-        <Avatar
-          key={index}
-          style={styles.miniatureStyles}
-          source={{ uri: imageReport }}
-          onPress={() => removeImage(imageReport)}
-        />
-      ))}
-    </ScrollView>
+        {map(imagesSelected, (imageReport, index) => (
+          <Avatar
+            key={index}
+            style={styles.miniatureStyles}
+            source={{ uri: imageReport }}
+            onPress={() => removeImage(imageReport)}
+          />
+        ))}
+      </ScrollView>
+      <TakePhoto
+        setShowCamera={setShowCamera}
+        showCamera={showCamera}
+        navigation={navigation}
+      />
+    </>
   );
 }
 

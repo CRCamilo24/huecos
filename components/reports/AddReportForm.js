@@ -148,6 +148,7 @@ export default function AddReportForm({ toastRef, setLoading, navigation }) {
         toastRef={toastRef}
         imagesSelected={imagesSelected}
         setImagesSelected={setImagesSelected}
+        navigation={navigation}
       />
       <Button
         title="Crear Reporte"
