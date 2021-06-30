@@ -15,7 +15,13 @@ import ImageReport from "./components/ImageReport";
 import UploadImage from "./components/UploadImage";
 import FormAdd from "./components/FormAdd";
 
-export default function AddReportForm({ toastRef, setLoading, navigation }) {
+export default function AddReportForm({
+  toastRef,
+  setLoading,
+  navigation,
+  setShowCamera,
+  showCamera,
+}) {
   const [formData, setFormData] = useState(defaultFormValues());
   //const [errorName, setErrorName] = useState(null)
   const [errorDescription, setErrorDescription] = useState(null);
@@ -149,12 +155,16 @@ export default function AddReportForm({ toastRef, setLoading, navigation }) {
         imagesSelected={imagesSelected}
         setImagesSelected={setImagesSelected}
         navigation={navigation}
+        setShowCamera={setShowCamera}
+        showCamera={showCamera}
       />
-      <Button
-        title="Crear Reporte"
-        onPress={addReport}
-        buttonStyle={styles.btnAddReport}
-      />
+      {!showCamera && (
+        <Button
+          title="Crear Reporte"
+          onPress={addReport}
+          buttonStyle={styles.btnAddReport}
+        />
+      )}
       <MapReport
         isVisibleMap={isVisibleMap}
         setIsVisibleMap={setIsVisibleMap}

@@ -3,6 +3,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 
 import AddReport from "../screens/reports/AddReport";
 import Reports from "../screens/reports/Reports";
+import Notes from "../screens/reports/Notes";
 
 const Stack = createStackNavigator();
 
@@ -18,6 +19,11 @@ export default function ReportsStack() {
         name="add-report"
         component={AddReport}
         options={{ title: "Crear Reporte" }}
+      />
+      <Stack.Screen
+        name="notes"
+        component={Notes}
+        options={{ title: "Notas" }}
       />
     </Stack.Navigator>
   );

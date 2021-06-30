@@ -28,7 +28,7 @@ export default function Reports({ navigation }) {
           color="#442484"
           reverse
           containerStyle={styles.btnContainer}
-          onPress={() => navigation.navigate("add-report")}
+          onPress={() => navigation.navigate("notes")}
         />
       )}
     </View>

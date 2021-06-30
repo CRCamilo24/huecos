@@ -1,18 +1,62 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
-import { Text, StyleSheet, TouchableOpacity, View } from "react-native";
+import { Text, StyleSheet, TouchableOpacity, View, Alert } from "react-native";
 import { Camera } from "expo-camera";
+import { useIsFocused, useNavigation } from "@react-navigation/native";
+import CameraPreview from "./Preview";
 
-const TakePhoto = ({ showCamera, setShowCamera }) => {
+const TakePhoto = ({
+  showCamera,
+  setShowCamera,
+  imagesSelected,
+  setImagesSelected,
+}) => {
   const [hasPermission, setHasPermission] = useState(null);
   const [type, setType] = useState(Camera.Constants.Type.back);
+  const [capture, setCapture] = useState({});
+  const [preview, setPreview] = useState(false);
+  const navigation = useNavigation();
+
+  const isFocused = useIsFocused();
+
+  let camera;
+
+  const snap = async () => {
+    if (!camera) return;
+    const photo = await camera.takePictureAsync({ quality: 1 });
+    setCapture(photo);
+    setPreview(true);
+    // setShowCamera(false);
+    // console.log("photo:-TAKEPHOTO", photo);
+  };
+
+  const retakePicture = () => {
+    setCapture(null);
+    setPreview(false);
+    setShowCamera(true);
+  };
 
   useEffect(() => {
-    (async () => {
-      const { status } = await Camera.requestPermissionsAsync();
-      setHasPermission(status === "granted");
-    })();
-  }, []);
+    if (!isFocused) {
+      setShowCamera(false);
+    }
+  }, [isFocused]);
+
+  useEffect(() => {
+    showCamera &&
+      (async () => {
+        const { status } = await Camera.requestPermissionsAsync();
+        console.log(status);
+        if (status === "granted") {
+          setShowCamera(true);
+          setHasPermission(status === "granted");
+        } else {
+          Alert.alert("Acceso denegado");
+          setShowCamera(false);
+          navigation.navigate("reports");
+        }
+      })();
+  }, [showCamera]);
 
   if (hasPermission === null) {
     return <View />;
@@ -29,19 +73,29 @@ const TakePhoto = ({ showCamera, setShowCamera }) => {
         justifyContent: "center",
         position: "absolute",
         width: "100%",
+        zIndex: 1,
       }}
     >
-      {showCamera && (
+      {preview && capture ? (
+        <CameraPreview
+          photo={capture}
+          retakePicture={retakePicture}
+          imagesSelected={imagesSelected}
+          setImagesSelected={setImagesSelected}
+        />
+      ) : (
         <Camera
           style={{
             alignItems: "center",
             backgroundColor: "white",
-            borderRadius: 5,
-            height: 700,
+            height: "100%",
             justifyContent: "flex-start",
             width: "90%",
           }}
           type={type}
+          ref={(r) => {
+            camera = r;
+          }}
         >
           <View
             style={{
@@ -56,7 +110,7 @@ const TakePhoto = ({ showCamera, setShowCamera }) => {
               style={{ color: "white" }}
               onPress={() => setShowCamera(false)}
             >
-              CLOSE
+              CERRAR
             </Text>
             <TouchableOpacity
               style={{}}
@@ -68,7 +122,27 @@ const TakePhoto = ({ showCamera, setShowCamera }) => {
                 );
               }}
             >
-              <Text style={{ color: "white" }}> Flip </Text>
+              <Text style={{ color: "white" }}> ROTAR </Text>
+            </TouchableOpacity>
+          </View>
+          <View
+            style={{
+              // flex: 1,
+              position: "absolute",
+              // borderWidth: 1,
+              borderColor: "white",
+              top: "85%",
+            }}
+          >
+            <TouchableOpacity style={styles.cameraButtons} onPress={snap}>
+              <Text
+                style={{
+                  fontSize: 18,
+                  color: "white",
+                }}
+              >
+                Capturar
+              </Text>
             </TouchableOpacity>
           </View>
         </Camera>
@@ -80,6 +154,14 @@ const TakePhoto = ({ showCamera, setShowCamera }) => {
 export default TakePhoto;
 
 const styles = StyleSheet.create({
+  cameraButtons: {
+    borderColor: "white",
+    borderRadius: 5,
+    borderWidth: 2,
+    justifyContent: "center",
+    margin: 5,
+    padding: 15,
+  },
   containerIcon: {
     alignItems: "center",
     justifyContent: "center",

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Alert, ScrollView, StyleSheet } from "react-native";
+import { Alert, ScrollView, StyleSheet, View } from "react-native";
 import { loadImageFromGallery } from "../../../utils/helpers";
 import { Avatar, Icon } from "react-native-elements";
 import { filter, map, size } from "lodash";
@@ -10,9 +10,9 @@ function UploadImage({
   imagesSelected,
   setImagesSelected,
   navigation,
+  setShowCamera,
+  showCamera,
 }) {
-  const [showCamera, setShowCamera] = useState(false);
-
   const imageSelect = async () => {
     const response = await loadImageFromGallery([4, 3]);
     if (!response.status) {
@@ -65,17 +65,21 @@ function UploadImage({
         {map(imagesSelected, (imageReport, index) => (
           <Avatar
             key={index}
-            style={styles.miniatureStyles}
+            // style={styles.miniatureStyles}
             source={{ uri: imageReport }}
             onPress={() => removeImage(imageReport)}
           />
         ))}
       </ScrollView>
-      <TakePhoto
-        setShowCamera={setShowCamera}
-        showCamera={showCamera}
-        navigation={navigation}
-      />
+      {showCamera && (
+        <TakePhoto
+          setShowCamera={setShowCamera}
+          showCamera={showCamera}
+          navigation={navigation}
+          imagesSelected={imagesSelected}
+          setImagesSelected={setImagesSelected}
+        />
+      )}
     </>
   );
 }
