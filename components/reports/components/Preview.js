@@ -1,12 +1,7 @@
 import React from "react";
 import { Image, ImageBackground, Text, View } from "react-native";
 
-const CameraPreview = ({
-  photo,
-  retakePicture,
-  imagesSelected,
-  setImagesSelected,
-}) => {
+const CameraPreview = ({ photo, retakePicture, savePhoto }) => {
   // console.log("photo-Preview", photo.photo.uri);
   // console.log("photo-Preview:", photo);
   return (
@@ -42,7 +37,7 @@ const CameraPreview = ({
             textAlignVertical: "center",
             width: "17%",
           }}
-          onPress={() => setImagesSelected([photo.uri])}
+          onPress={() => savePhoto(photo.uri)}
         >
           Guardar
         </Text>

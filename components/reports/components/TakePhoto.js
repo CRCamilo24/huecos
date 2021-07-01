@@ -4,6 +4,7 @@ import { Text, StyleSheet, TouchableOpacity, View, Alert } from "react-native";
 import { Camera } from "expo-camera";
 import { useIsFocused, useNavigation } from "@react-navigation/native";
 import CameraPreview from "./Preview";
+import { PictureContext } from "../../context/PictureContext";
 
 const TakePhoto = ({
   showCamera,
@@ -16,8 +17,9 @@ const TakePhoto = ({
   const [capture, setCapture] = useState({});
   const [preview, setPreview] = useState(false);
   const navigation = useNavigation();
-
   const isFocused = useIsFocused();
+
+  const [, { setPhoto }] = PictureContext();
 
   let camera;
 
@@ -34,6 +36,13 @@ const TakePhoto = ({
     setCapture(null);
     setPreview(false);
     setShowCamera(true);
+  };
+
+  const savePhoto = (picture) => {
+    setCapture(null);
+    setPreview(false);
+    setShowCamera(false);
+    setPhoto(picture);
   };
 
   useEffect(() => {
@@ -80,8 +89,7 @@ const TakePhoto = ({
         <CameraPreview
           photo={capture}
           retakePicture={retakePicture}
-          imagesSelected={imagesSelected}
-          setImagesSelected={setImagesSelected}
+          savePhoto={savePhoto}
         />
       ) : (
         <Camera

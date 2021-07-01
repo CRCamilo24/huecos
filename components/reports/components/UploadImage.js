@@ -1,9 +1,19 @@
-import React, { useState } from "react";
-import { Alert, ScrollView, StyleSheet, View } from "react-native";
+import React, { useEffect, useState } from "react";
+import {
+  Alert,
+  Image,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import { loadImageFromGallery } from "../../../utils/helpers";
 import { Avatar, Icon } from "react-native-elements";
 import { filter, map, size } from "lodash";
 import TakePhoto from "./TakePhoto";
+import * as ImagePicker from "expo-image-picker";
+import { PictureContext } from "../../context/PictureContext";
 
 function UploadImage({
   toastRef,
@@ -13,14 +23,54 @@ function UploadImage({
   setShowCamera,
   showCamera,
 }) {
-  const imageSelect = async () => {
-    const response = await loadImageFromGallery([4, 3]);
-    if (!response.status) {
-      toastRef.current.show("No has seleccionado ninguna imagen", 3000);
-      return;
+  const [galleryPerssionsStatus, setGalleryPerssionsStatus] = useState(false);
+  const [refreshPremissions, setRefreshPremissions] = useState(false);
+  const [{ photo, image }, { setPhoto, setImage }] = PictureContext();
+
+  const imageUri = photo || image;
+
+  const pickImage = async () => {
+    if (!galleryPerssionsStatus) {
+      setRefreshPremissions(!refreshPremissions);
+    } else {
+      let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        allowsEditing: true,
+        aspect: [4, 3],
+        quality: 0.5,
+      });
+
+      console.log(result);
+
+      if (!result.cancelled) {
+        setImage(result.uri);
+        setImagesSelected([result.uri]);
+        setPhoto(null);
+      }
     }
-    setImagesSelected([...imagesSelected, response.image]);
   };
+
+  useEffect(() => {
+    (async () => {
+      if (Platform.OS !== "web") {
+        const { status } =
+          await ImagePicker.requestMediaLibraryPermissionsAsync();
+        if (status !== "granted") {
+          alert(
+            "Debes de darle permiso para accerder a las imágenes del teléfono."
+          );
+          setGalleryPerssionsStatus(false);
+        } else {
+          setGalleryPerssionsStatus(true);
+          pickImage();
+        }
+      }
+    })();
+  }, [refreshPremissions]);
+
+  useEffect(() => {
+    photo && setImagesSelected([photo]);
+  }, [photo]);
 
   const removeImage = (image) => {
     Alert.alert(
@@ -36,7 +86,10 @@ function UploadImage({
           onPress: () => {
             setImagesSelected(
               filter(imagesSelected, (imageUrl) => imageUrl !== image)
+              // [""]
             );
+            setPhoto(null);
+            setImage(null);
           },
         },
       ],
@@ -45,16 +98,27 @@ function UploadImage({
   };
   return (
     <>
-      <ScrollView horizontal style={styles.viewImages}>
-        {size(imagesSelected) < 1 && (
-          <Icon
-            type="material-community"
-            name="image"
-            color="#7a7a7a"
-            containerStyle={styles.containerIcon}
-            onPress={imageSelect}
-          />
-        )}
+      {imageUri && !showCamera && (
+        <View style={styles.viewImage}>
+          <Pressable
+            style={styles.pressableText}
+            onPress={() => removeImage(imagesSelected[0])}
+          >
+            <Text style={{ color: "white" }}>Borrar</Text>
+            <Text style={{ color: "white" }}>X</Text>
+          </Pressable>
+          <Image source={{ uri: imageUri }} style={styles.image} />
+        </View>
+      )}
+      <ScrollView horizontal style={styles.scrollView}>
+        <Icon
+          type="material-community"
+          name="image"
+          color="#7a7a7a"
+          containerStyle={styles.containerIcon}
+          // onPress={imageSelect}
+          onPress={pickImage}
+        />
         <Icon
           type="material-community"
           name="camera"
@@ -62,14 +126,6 @@ function UploadImage({
           containerStyle={styles.containerIcon}
           onPress={() => setShowCamera(true)}
         />
-        {map(imagesSelected, (imageReport, index) => (
-          <Avatar
-            key={index}
-            // style={styles.miniatureStyles}
-            source={{ uri: imageReport }}
-            onPress={() => removeImage(imageReport)}
-          />
-        ))}
       </ScrollView>
       {showCamera && (
         <TakePhoto
@@ -87,23 +143,58 @@ function UploadImage({
 export default UploadImage;
 
 const styles = StyleSheet.create({
-  viewImages: {
+  scrollView: {
     flexDirection: "row",
     marginHorizontal: 20,
-    marginTop: 30,
+    // marginTop: 30,
   },
 
   containerIcon: {
     alignItems: "center",
+    backgroundColor: "#e3e3e3",
     justifyContent: "center",
     marginRight: 10,
     height: 70,
     width: 79,
-    backgroundColor: "#e3e3e3",
   },
   miniatureStyle: {
     width: 70,
     height: 70,
     marginRight: 10,
   },
+  image: {
+    height: 100,
+    width: 100,
+  },
+  viewImage: {
+    alignItems: "center",
+    // borderWidth: 1,
+    marginBottom: 15,
+  },
+  pressableText: {
+    backgroundColor: "#442484",
+    // borderWidth: 1,
+    flexDirection: "row",
+    justifyContent: "space-around",
+    width: 100,
+  },
 });
+
+{
+  /* {size(imagesSelected) < 1 && ( */
+}
+
+{
+  /* )} */
+}
+
+{
+  /* {map(imagesSelected, (imageReport, index) => (
+          <Avatar
+            key={index}
+            // style={styles.miniatureStyles}
+            source={{ uri: imageReport }}
+            onPress={() => removeImage(imageReport)}
+          />
+        ))} */
+}
