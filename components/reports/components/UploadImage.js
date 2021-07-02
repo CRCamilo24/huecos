@@ -25,6 +25,7 @@ function UploadImage({
 }) {
   const [galleryPerssionsStatus, setGalleryPerssionsStatus] = useState(false);
   const [refreshPremissions, setRefreshPremissions] = useState(false);
+  const [pressedGallery, setPressedGallery] = useState(false);
   const [{ photo, image }, { setPhoto, setImage }] = PictureContext();
 
   const imageUri = photo || image;
@@ -34,7 +35,7 @@ function UploadImage({
       setRefreshPremissions(!refreshPremissions);
     } else {
       let result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
         allowsEditing: true,
         aspect: [4, 3],
         quality: 0.5,
@@ -46,6 +47,9 @@ function UploadImage({
         setImage(result.uri);
         setImagesSelected([result.uri]);
         setPhoto(null);
+        setPressedGallery(false);
+      } else {
+        setPressedGallery(false);
       }
     }
   };
@@ -62,7 +66,6 @@ function UploadImage({
           setGalleryPerssionsStatus(false);
         } else {
           setGalleryPerssionsStatus(true);
-          pickImage();
         }
       }
     })();
@@ -70,7 +73,8 @@ function UploadImage({
 
   useEffect(() => {
     photo && setImagesSelected([photo]);
-  }, [photo]);
+    pressedGallery && pickImage();
+  }, [photo, pressedGallery]);
 
   const removeImage = (image) => {
     Alert.alert(
@@ -117,7 +121,7 @@ function UploadImage({
           color="#7a7a7a"
           containerStyle={styles.containerIcon}
           // onPress={imageSelect}
-          onPress={pickImage}
+          onPress={() => (pickImage, setPressedGallery(true))}
         />
         <Icon
           type="material-community"
