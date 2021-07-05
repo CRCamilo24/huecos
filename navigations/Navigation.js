@@ -38,7 +38,7 @@ export default function Navigation() {
   return (
     <NavigationContainer>
       <Tab.Navigator
-        initialRouteName="account"
+        initialRouteName="reports"
         tabBarOptions={{
           inactiveTintColor: "#a17dc3",
           activeTintColor: "#442484",
@@ -58,14 +58,14 @@ export default function Navigation() {
           options={{ title: "Reportes" }}
         />
         <Tab.Screen
-          name="favorites"
+          name="info"
           component={FavoriteStack}
-          options={{ title: "Favoritos" }}
+          options={{ title: "Info" }}
         />
         <Tab.Screen
-          name="top-reports"
+          name="historial"
           component={TopReportsStack}
-          options={{ title: "Info" }}
+          options={{ title: "Historial" }}
         />
         <Tab.Screen
           name="account"

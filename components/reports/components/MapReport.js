@@ -18,7 +18,7 @@ function MapReport({
       const response = await getCurrentLocation();
       if (response.status) {
         setNewRegion(response.location);
-        console.log(response.location);
+        console.log("response.location:-MapReport", response.location);
       }
     })();
   }, []);

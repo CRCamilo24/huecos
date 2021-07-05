@@ -102,18 +102,6 @@ function UploadImage({
   };
   return (
     <>
-      {imageUri && !showCamera && (
-        <View style={styles.viewImage}>
-          <Pressable
-            style={styles.pressableText}
-            onPress={() => removeImage(imagesSelected[0])}
-          >
-            <Text style={{ color: "white" }}>Borrar</Text>
-            <Text style={{ color: "white" }}>X</Text>
-          </Pressable>
-          <Image source={{ uri: imageUri }} style={styles.image} />
-        </View>
-      )}
       <ScrollView horizontal style={styles.scrollView}>
         <Icon
           type="material-community"
@@ -130,6 +118,18 @@ function UploadImage({
           containerStyle={styles.containerIcon}
           onPress={() => setShowCamera(true)}
         />
+        {imageUri && !showCamera && (
+          <View style={styles.viewImage}>
+            <Pressable
+              style={styles.pressableText}
+              onPress={() => removeImage(imagesSelected[0])}
+            >
+              <Text style={{ color: "white" }}>Borrar</Text>
+              <Text style={{ color: "white" }}>X</Text>
+            </Pressable>
+            <Image source={{ uri: imageUri }} style={styles.image} />
+          </View>
+        )}
       </ScrollView>
       {showCamera && (
         <TakePhoto
@@ -167,8 +167,8 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   image: {
-    height: 100,
-    width: 100,
+    height: 50,
+    width: 79,
   },
   viewImage: {
     alignItems: "center",
@@ -180,7 +180,7 @@ const styles = StyleSheet.create({
     // borderWidth: 1,
     flexDirection: "row",
     justifyContent: "space-around",
-    width: 100,
+    width: 79,
   },
 });
 
