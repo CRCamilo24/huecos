@@ -2,7 +2,6 @@ import { createStore, createHook } from "react-sweet-state";
 import { firebaseApp } from "../../utils/firebase";
 
 const initialState = {
-  idUser: null,
   collection: "",
   data: null,
   loading: true,
@@ -11,14 +10,14 @@ const initialState = {
 
 const actions = {
   getReports:
-    ({ idUser, collection }) =>
+    ({ collection }) =>
     async ({ setState }) => {
       try {
         const data = [];
         await firebaseApp
           .firestore()
           .collection(collection)
-          .where("createBy", "==", `${idUser}`)
+          // .where("createBy", "==", `${idUser}`)
           .get()
           .then((item) => {
             item.docs.forEach((doc) => {
@@ -30,7 +29,6 @@ const actions = {
       } catch (error) {
         setState({ loading: false, error });
         console.log("error:-ReportsContext", error);
-        console.log("collection:-ReportsContext", collection);
       }
     },
 };
