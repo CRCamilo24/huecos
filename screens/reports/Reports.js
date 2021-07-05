@@ -4,6 +4,7 @@ import { Icon } from "react-native-elements";
 import firebase from "firebase/app";
 
 import Loading from "../../components/Loading";
+import Clustering from "../../components/reports/components/Clustering/Clustering";
 
 export default function Reports({ navigation }) {
   const [user, setUser] = useState(null);
@@ -20,7 +21,8 @@ export default function Reports({ navigation }) {
 
   return (
     <View style={styles.viewBody}>
-      <Text>Reportes...</Text>
+      {!user && <Text>Reportes...</Text>}
+      {user && <Clustering />}
       {user && (
         <Icon
           type="material-community"
