@@ -7,6 +7,7 @@ import { isEmpty } from "lodash";
 import Loading from "../Loading";
 import { validateEmail } from "../../utils/helpers";
 import { loginWithEmailAndPassword } from "../../utils/actions";
+import { SCREEN_WIDTH } from "../../screens/reports/AddReport";
 
 export default function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
@@ -88,6 +89,16 @@ export default function LoginForm() {
           />
         }
       />
+      <Text
+        style={{
+          color: "rgba(0,0,0,0.7)",
+          width: "100%",
+          paddingHorizontal: SCREEN_WIDTH * 0.05,
+        }}
+        onPress={() => navigation.navigate("recover")}
+      >
+        ¿Olvidó su contraseña?
+      </Text>
       <Button
         title="Iniciar Sesión"
         containerStyle={styles.btnContainer}

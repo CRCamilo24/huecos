@@ -14,6 +14,7 @@ export default function Login() {
   const [{ authUser, loading }, { signInWithGoogle }] = useAuthContext();
 
   useEffect(() => {
+    authUser && !loading && navigation.navigate("account");
     authUser && !loading && navigation.navigate("reports");
   });
 
@@ -26,6 +27,7 @@ export default function Login() {
       />
       <View style={styles.container}>
         <LoginForm />
+
         <GoogleButton onPress={() => signInWithGoogle()} />
         <CreateAccount />
       </View>
