@@ -110,14 +110,17 @@ function UploadImage({
     <>
       <ScrollView horizontal style={styles.scrollView}>
         <View style={[styles.optionsContainer, { width: SCREEN_WIDTH * 0.9 }]}>
-          <Icon
-            type="material-community"
-            name="image"
-            color="#7a7a7a"
-            containerStyle={styles.containerIcon}
-            // onPress={imageSelect}
-            onPress={() => (pickImage, setPressedGallery(true))}
-          />
+          <View>
+            <Icon
+              type="material-community"
+              name="image"
+              color="#7a7a7a"
+              containerStyle={styles.containerIcon}
+              // onPress={imageSelect}
+              onPress={() => (pickImage, setPressedGallery(true))}
+            />
+            <Text style={{ textAlign: "center" }}>Galería</Text>
+          </View>
           {imageUri && !showCamera && (
             <View style={styles.viewImage}>
               <Pressable
@@ -130,13 +133,16 @@ function UploadImage({
               <Image source={{ uri: imageUri }} style={styles.image} />
             </View>
           )}
-          <Icon
-            type="material-community"
-            name="camera"
-            color="#7a7a7a"
-            containerStyle={styles.containerIcon}
-            onPress={() => setShowCamera(true)}
-          />
+          <View>
+            <Icon
+              type="material-community"
+              name="camera"
+              color="#7a7a7a"
+              containerStyle={styles.containerIcon}
+              onPress={() => setShowCamera(true)}
+            />
+            <Text style={{ textAlign: "center" }}>Cámara</Text>
+          </View>
         </View>
       </ScrollView>
       {showCamera && (
