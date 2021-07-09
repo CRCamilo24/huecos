@@ -51,7 +51,7 @@ const RecoverPasswordPage = ({ navigation }) => {
                 textAlign: "center",
               }}
             >
-              "Revisa tú correo"
+              Revisa tú correo
             </Text>
             <Text
               style={{
@@ -62,8 +62,8 @@ const RecoverPasswordPage = ({ navigation }) => {
                 textAlign: "center",
               }}
             >
-              "Le acabamos de enviar un correo electrónico con un vínculo para
-              restablecer su contraseña."
+              Le acabamos de enviar un correo electrónico con un vínculo para
+              restablecer su contraseña.
             </Text>
             <TouchableOpacity
               style={{
@@ -93,7 +93,7 @@ const RecoverPasswordPage = ({ navigation }) => {
                 textAlign: "center",
               }}
             >
-              ¿"Olvidó su contraseña?"
+              ¿Olvidó su contraseña?
             </Text>
             <Text
               style={{
@@ -104,8 +104,8 @@ const RecoverPasswordPage = ({ navigation }) => {
                 padding: SCREEN_HEIGHT * 0.009,
               }}
             >
-              "Ingrese la dirección de correo electrónico con la que se registró
-              y le enviaremos un enlace para establecer una nueva contraseña."
+              Ingrese la dirección de correo electrónico con la que se registró
+              y le enviaremos un enlace para establecer una nueva contraseña.
             </Text>
             <TextInput
               style={{
