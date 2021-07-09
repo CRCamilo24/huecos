@@ -51,7 +51,7 @@ const RecoverPasswordPage = ({ navigation }) => {
                 textAlign: "center",
               }}
             >
-              Revisa tú correo
+              Consulte su correo electrónico
             </Text>
             <Text
               style={{
