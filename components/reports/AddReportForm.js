@@ -55,6 +55,7 @@ export default function AddReportForm({
       location: locationReport,
       images: responseUploadImages,
       createBy: getCurrentUser().uid,
+      date: Date.now(),
     };
     const responseAddDocument = await addDocumentWithoutId("reports", report);
     setLoading(false);

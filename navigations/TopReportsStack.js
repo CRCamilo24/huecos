@@ -11,7 +11,7 @@ export default function TopReportsStack() {
       <Stack.Screen
         name="top-reports"
         component={TopReports}
-        options={{ title: "Información" }}
+        options={{ title: "Historial" }}
       />
     </Stack.Navigator>
   );
