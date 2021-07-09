@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "419454009226-bs1c8npg7t2a597s7fekhv2me7t5rl6n.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.valorizacionapp",
+            "certificate_hash": "5e5c409ab030d75b22aec502d8257b57f1c9296a"
+          }
+        },
+        {
           "client_id": "419454009226-t6cls7pag073dqib4lh0ep64dcujrpk2.apps.googleusercontent.com",
           "client_type": 3
         }

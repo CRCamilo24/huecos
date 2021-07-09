@@ -14,6 +14,7 @@ import { filter, map, size } from "lodash";
 import TakePhoto from "./TakePhoto";
 import * as ImagePicker from "expo-image-picker";
 import { PictureContext } from "../../context/PictureContext";
+import { SCREEN_WIDTH } from "../../../screens/reports/AddReport";
 
 function UploadImage({
   toastRef,
@@ -73,8 +74,12 @@ function UploadImage({
 
   useEffect(() => {
     photo && setImagesSelected([photo]);
+  }, [photo]);
+
+  useEffect(() => {
     pressedGallery && pickImage();
-  }, [photo, pressedGallery]);
+    setPressedGallery(false);
+  }, [pressedGallery]);
 
   const removeImage = (image) => {
     Alert.alert(
@@ -103,33 +108,35 @@ function UploadImage({
   return (
     <>
       <ScrollView horizontal style={styles.scrollView}>
-        <Icon
-          type="material-community"
-          name="image"
-          color="#7a7a7a"
-          containerStyle={styles.containerIcon}
-          // onPress={imageSelect}
-          onPress={() => (pickImage, setPressedGallery(true))}
-        />
-        <Icon
-          type="material-community"
-          name="camera"
-          color="#7a7a7a"
-          containerStyle={styles.containerIcon}
-          onPress={() => setShowCamera(true)}
-        />
-        {imageUri && !showCamera && (
-          <View style={styles.viewImage}>
-            <Pressable
-              style={styles.pressableText}
-              onPress={() => removeImage(imagesSelected[0])}
-            >
-              <Text style={{ color: "white" }}>Borrar</Text>
-              <Text style={{ color: "white" }}>X</Text>
-            </Pressable>
-            <Image source={{ uri: imageUri }} style={styles.image} />
-          </View>
-        )}
+        <View style={[styles.optionsContainer, { width: SCREEN_WIDTH * 0.9 }]}>
+          <Icon
+            type="material-community"
+            name="image"
+            color="#7a7a7a"
+            containerStyle={styles.containerIcon}
+            // onPress={imageSelect}
+            onPress={() => (pickImage, setPressedGallery(true))}
+          />
+          {imageUri && !showCamera && (
+            <View style={styles.viewImage}>
+              <Pressable
+                style={styles.pressableText}
+                onPress={() => removeImage(imagesSelected[0])}
+              >
+                <Text style={{ color: "white" }}>Borrar</Text>
+                <Text style={{ color: "white" }}>X</Text>
+              </Pressable>
+              <Image source={{ uri: imageUri }} style={styles.image} />
+            </View>
+          )}
+          <Icon
+            type="material-community"
+            name="camera"
+            color="#7a7a7a"
+            containerStyle={styles.containerIcon}
+            onPress={() => setShowCamera(true)}
+          />
+        </View>
       </ScrollView>
       {showCamera && (
         <TakePhoto
@@ -157,7 +164,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#e3e3e3",
     justifyContent: "center",
-    marginRight: 10,
+    // marginRight: 10,
     height: 70,
     width: 79,
   },
@@ -173,7 +180,7 @@ const styles = StyleSheet.create({
   viewImage: {
     alignItems: "center",
     // borderWidth: 1,
-    marginBottom: 15,
+    // marginBottom: 15,
   },
   pressableText: {
     backgroundColor: "#442484",
@@ -181,6 +188,11 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-around",
     width: 79,
+  },
+  optionsContainer: {
+    // borderWidth: 1,
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
 });
 

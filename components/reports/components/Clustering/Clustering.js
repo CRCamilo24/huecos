@@ -5,11 +5,9 @@ import { Marker } from "react-native-maps";
 import { getCurrentLocation } from "../../../../utils/helpers";
 import Markers from "./Markers";
 import MapView from "react-native-map-clustering";
-import { ReportsContext } from "../../../context/ReportsContext";
 
-const Clustering = () => {
+const Clustering = ({ data, loading }) => {
   const [currentLocation, setCurrentLocation] = useState(null);
-  const [{ data, loading }, { getReports }] = ReportsContext();
 
   const getMarkerLocation = () => {
     const points = data
@@ -32,10 +30,9 @@ const Clustering = () => {
       const response = await getCurrentLocation();
       if (response.status) {
         setCurrentLocation(response.location);
-        console.log("response.location:-Clustering", response.location);
+        // console.log("response.location:-Clustering", response.location);
       }
     })();
-    getReports({ collection: "reports" });
   }, [loading]);
 
   return (
@@ -43,7 +40,11 @@ const Clustering = () => {
       {currentLocation && !loading && (
         <MapView
           style={styles.map}
-          initialRegion={currentLocation}
+          initialRegion={{
+            ...currentLocation,
+            latitudeDelta: 0.05,
+            longitudeDelta: 0.05,
+          }}
           showsUserLocation
         >
           {getMarkerLocation().map((item, i) => (

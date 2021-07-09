@@ -27,7 +27,7 @@ export default function AddReportForm({
   //const [errorName, setErrorName] = useState(null)
   const [errorDescription, setErrorDescription] = useState(null);
   const [errorBarrio, setErrorBarrio] = useState(null);
-  const [errorEmail, setErrorEmail] = useState(null);
+  // const [errorEmail, setErrorEmail] = useState(null);
   const [errorAddress, setErrorAddress] = useState(null);
   const [errorPhone, setErrorPhone] = useState(null);
   const [imagesSelected, setImagesSelected] = useState([]);
@@ -47,7 +47,7 @@ export default function AddReportForm({
     const report = {
       address: formData.address,
       description: formData.description,
-      email: formData.email,
+      // email: formData.email,
       barrio: formData.barrio,
       callingCode: formData.callingCode,
       location: locationReport,
@@ -103,10 +103,10 @@ export default function AddReportForm({
       isValid = false;
     }
 
-    if (!validateEmail(formData.email)) {
-      setErrorEmail("Debes ingresar un email válido.");
-      isValid = false;
-    }
+    // if (!validateEmail(formData.email)) {
+    //   setErrorEmail("Debes ingresar un email válido.");
+    //   isValid = false;
+    // }
 
     if (size(formData.phone) < 10) {
       setErrorPhone("Debes ingresar un teléfono válido.");
@@ -134,7 +134,7 @@ export default function AddReportForm({
   const clearErrors = () => {
     setErrorAddress(null);
     setErrorDescription(null);
-    setErrorEmail(null);
+    // setErrorEmail(null);
     setErrorBarrio(null);
     //setErrorName(null)
     setErrorPhone(null);
@@ -142,14 +142,14 @@ export default function AddReportForm({
 
   return (
     <ScrollView style={styles.viewContainer}>
-      <ImageReport imageReport={imagesSelected[0]} />
+      <ImageReport imageReport={photo || image} />
       <FormAdd
         formData={formData}
         setFormData={setFormData}
         //errorName={errorName}
         errorDescription={errorDescription}
         errorBarrio={errorBarrio}
-        errorEmail={errorEmail}
+        // errorEmail={errorEmail}
         errorAddress={errorAddress}
         errorPhone={errorPhone}
         setIsVisibleMap={setIsVisibleMap}
@@ -200,6 +200,7 @@ const styles = StyleSheet.create({
 
   btnAddReport: {
     margin: 20,
+    marginTop: 40,
     backgroundColor: "#442484",
   },
 });

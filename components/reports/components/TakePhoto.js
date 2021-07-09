@@ -1,10 +1,20 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
-import { Text, StyleSheet, TouchableOpacity, View, Alert } from "react-native";
+import {
+  Dimensions,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+  Alert,
+} from "react-native";
 import { Camera } from "expo-camera";
 import { useIsFocused, useNavigation } from "@react-navigation/native";
 import CameraPreview from "./Preview";
 import { PictureContext } from "../../context/PictureContext";
+
+const SCREEN_WIDTH = Dimensions.get("screen").width;
+const SCREEN_HEIGHT = Dimensions.get("screen").height;
 
 const TakePhoto = ({
   showCamera,
@@ -83,6 +93,7 @@ const TakePhoto = ({
         position: "absolute",
         width: "100%",
         zIndex: 1,
+        paddingTop: SCREEN_HEIGHT * 0.05,
       }}
     >
       {preview && capture ? (
@@ -98,6 +109,7 @@ const TakePhoto = ({
             backgroundColor: "white",
             height: "100%",
             justifyContent: "flex-start",
+            // // marginTop: SCREEN_HEIGHT / 15,
             width: "90%",
           }}
           type={type}
@@ -107,21 +119,17 @@ const TakePhoto = ({
         >
           <View
             style={{
+              alignItems: "center",
               borderColor: "white",
               borderWidth: 1,
               flexDirection: "row",
+              height: "5%",
               justifyContent: "space-around",
               width: "100%",
             }}
           >
             <Text
               style={{ color: "white" }}
-              onPress={() => setShowCamera(false)}
-            >
-              CERRAR
-            </Text>
-            <TouchableOpacity
-              style={{}}
               onPress={() => {
                 setType(
                   type === Camera.Constants.Type.back
@@ -130,8 +138,16 @@ const TakePhoto = ({
                 );
               }}
             >
-              <Text style={{ color: "white" }}> ROTAR </Text>
-            </TouchableOpacity>
+              {" "}
+              ROTAR{" "}
+            </Text>
+
+            <Text
+              style={{ color: "white" }}
+              onPress={() => setShowCamera(false)}
+            >
+              CERRAR
+            </Text>
           </View>
           <View
             style={{
@@ -168,6 +184,7 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     justifyContent: "center",
     margin: 5,
+    // marginBottom: SCREEN_HEIGHT / 15,
     padding: 15,
   },
   containerIcon: {

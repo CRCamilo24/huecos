@@ -5,8 +5,18 @@ import { useNavigation } from "@react-navigation/native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 import LoginForm from "../../components/account/LoginForm";
+import { useAuthContext } from "../../components/context/AuthContext";
+import { useEffect } from "react";
+import GoogleButton from "./GoogleButton";
 
 export default function Login() {
+  const navigation = useNavigation();
+  const [{ authUser, loading }, { signInWithGoogle }] = useAuthContext();
+
+  useEffect(() => {
+    authUser && !loading && navigation.navigate("reports");
+  });
+
   return (
     <KeyboardAwareScrollView>
       <Image
@@ -16,6 +26,7 @@ export default function Login() {
       />
       <View style={styles.container}>
         <LoginForm />
+        <GoogleButton onPress={() => signInWithGoogle()} />
         <CreateAccount />
       </View>
       <Divider style={styles.divider} />

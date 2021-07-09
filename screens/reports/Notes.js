@@ -63,7 +63,7 @@ const Notes = ({ navigation }) => {
         onPress={() => navigation.navigate("add-report")}
       >
         <Text style={{ color: "white", fontSize: 18, fontWeight: "600" }}>
-          TOMAR FOTO
+          Continuar con el reporte
         </Text>
       </Pressable>
     </View>

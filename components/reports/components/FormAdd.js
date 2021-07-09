@@ -9,7 +9,7 @@ function FormAdd({
   setFormData,
   errorDescription,
   errorBarrio,
-  errorEmail,
+  // errorEmail,
   errorAddress,
   errorPhone,
   setIsVisibleMap,
@@ -52,13 +52,13 @@ function FormAdd({
         errorMessage={errorBarrio}
       />
       {/* cambiar por Barrio */}
-      <Input
+      {/* <Input
         keyboardType="email-address"
         placeholder="Email del usuario..."
         defaultValue={formData.email}
         onChange={(e) => onChange(e, "email")}
         errorMessage={errorEmail}
-      />
+      /> */}
       {/* PARA MODIFICAR NO VA */}
       <View style={styles.phoneView} />
       <CountryPicker

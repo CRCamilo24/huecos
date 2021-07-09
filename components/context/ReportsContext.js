@@ -23,8 +23,16 @@ const actions = {
             item.docs.forEach((doc) => {
               data.push({ ...doc.data(), id_doc: doc.id });
             });
+          })
+          .catch((error) => {
+            console.log("error:", error);
+            setState({ data: null, error: true });
+            alert(
+              "Ocurrió un error, por favor inténtelo luego de unos minutos"
+            );
           });
         setState({ data, loading: false, error: null });
+
         // console.log("data:-ReportsContext", data);
       } catch (error) {
         setState({ loading: false, error });
