@@ -10,7 +10,7 @@ export default function TopReports() {
   const [{ authUser }, {}] = useAuthContext();
   const [{ data, loading }, { getReports }] = ReportsContext();
 
-  const userId = authUser.uid;
+  const userId = authUser && authUser.uid;
 
   const getUserReports = () => {
     let userReports = [];
