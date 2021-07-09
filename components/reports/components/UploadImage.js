@@ -74,7 +74,8 @@ function UploadImage({
 
   useEffect(() => {
     photo && setImagesSelected([photo]);
-  }, [photo]);
+    image && setImagesSelected([image]);
+  }, [photo, image]);
 
   useEffect(() => {
     pressedGallery && pickImage();

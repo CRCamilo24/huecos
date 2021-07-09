@@ -7,10 +7,12 @@ import Loading from "../../components/Loading";
 import Clustering from "../../components/reports/components/Clustering/Clustering";
 import { useState } from "react";
 import { ReportsContext } from "../../components/context/ReportsContext";
+// import { useIsFocused } from "@react-navigation/native";
 
 export default function Reports({ navigation }) {
   const [user, setUser] = useState(null);
   const [{ data, loading }, { getReports }] = ReportsContext();
+  // const isFocused = useIsFocused();
 
   useEffect(() => {
     firebase.auth().onAuthStateChanged((userInfo) => {

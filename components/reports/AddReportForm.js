@@ -15,6 +15,7 @@ import ImageReport from "./components/ImageReport";
 import UploadImage from "./components/UploadImage";
 import FormAdd from "./components/FormAdd";
 import { PictureContext } from "../context/PictureContext";
+import { ReportsContext } from "../context/ReportsContext";
 
 export default function AddReportForm({
   toastRef,
@@ -35,6 +36,7 @@ export default function AddReportForm({
   const [locationReport, setLocationReport] = useState(null);
 
   const [{ photo, image }, { setPhoto, setImage }] = PictureContext();
+  const [, { getReports }] = ReportsContext();
 
   const addReport = async () => {
     //console.log(formData)
@@ -67,6 +69,7 @@ export default function AddReportForm({
     }
     setPhoto(null);
     setImage(null);
+    getReports({ collection: "reports" });
     navigation.navigate("reports");
   };
   const uploadImages = async () => {
