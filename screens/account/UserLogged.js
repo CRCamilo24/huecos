@@ -8,6 +8,8 @@ import { closeSession, getCurrentUser } from "../../utils/actions";
 import Loading from "../../components/Loading";
 import InfoUser from "../../components/account/InfoUser";
 import AccountOptions from "../../components/account/AccountOptions";
+import { ImageBackground } from "react-native";
+import { COLORS, FONT_SIZE, SCREEN_HEIGHT } from "../../theme";
 
 export default function UserLogged() {
   const toastRef = useRef();
@@ -24,9 +26,54 @@ export default function UserLogged() {
   }, [relodUser]);
 
   return (
-    <View style={styles.container}>
+    <ImageBackground
+      style={styles.container}
+      source={require("../../assets/app-12.png")}
+    >
+      <ImageBackground
+        source={require("../../assets/Informacion.png")}
+        style={{
+          //   borderWidth: 1,
+          alignItems: "center",
+          height: "35%",
+          width: "100%",
+          position: "absolute",
+          marginTop: SCREEN_HEIGHT * 0.03,
+          zIndex: 1,
+        }}
+        resizeMethod="resize"
+        resizeMode="contain"
+      >
+        <Text
+          style={{
+            // borderWidth: 1,
+            // position: "absolute",
+            color: COLORS.secondary,
+            fontSize: SCREEN_HEIGHT * 0.03,
+            fontWeight: "700",
+            textAlign: "left",
+            marginTop: SCREEN_HEIGHT * 0.085,
+          }}
+        >
+          REPARA
+        </Text>
+        <Text
+          style={{
+            // borderWidth: 1,
+            color: COLORS.secondary,
+            fontSize: SCREEN_HEIGHT * 0.01,
+            fontWeight: "700",
+            textAlign: "left",
+            //   marginBottom: SCREEN_HEIGHT * 0.8,
+            marginLeft: "9%",
+            width: "18%",
+          }}
+        >
+          Red participativa de reparación y acción
+        </Text>
+      </ImageBackground>
       {user && (
-        <View>
+        <View style={{ marginTop: SCREEN_HEIGHT * 0.2 }}>
           <InfoUser
             user={user}
             setLoading={setLoading}
@@ -41,8 +88,20 @@ export default function UserLogged() {
       )}
       <Button
         title="Cerrar Sesión"
-        buttonStyle={styles.btnCloseSession}
-        titleStyle={styles.btnCloseSessionTitle}
+        buttonStyle={[
+          styles.btnCloseSession,
+          {
+            marginHorizontal: SCREEN_HEIGHT * 0.03,
+            backgroundColor: COLORS.primary,
+            borderRadius: SCREEN_HEIGHT * 0.05,
+            marginTop: SCREEN_HEIGHT * 0.03,
+          },
+        ]}
+        titleStyle={{
+          color: COLORS.white,
+          fontWeight: "700",
+          fontSize: FONT_SIZE.large,
+        }}
         onPress={() => {
           closeSession();
           navigation.navigate("account");
@@ -50,26 +109,24 @@ export default function UserLogged() {
       />
       <Toast ref={toastRef} position="center" opacity={0.9} />
       <Loading isVisible={loading} text={loadingText} />
-    </View>
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     minHeight: "100%",
-    backgroundColor: "#f9f9f9",
+    // backgroundColor: "#f9f9f9",
   },
   btnCloseSession: {
-    marginTop: 30,
-    borderRadius: 5,
-    backgroundColor: "#FFFFFF",
-    borderTopWidth: 1,
-    borderTopColor: "#442484",
-    borderBottomWidth: 1,
-    borderBottomColor: "#442484",
-    paddingVertical: 10,
+    // marginTop: 30,
+    // borderRadius: 5,
+    // backgroundColor: "#FFFFFF",
+    // borderTopWidth: 1,
+    // borderTopColor: "#442484",
+    // borderBottomWidth: 1,
+    // borderBottomColor: "#442484",
+    // paddingVertical: 10,
   },
-  btnCloseSessionTitle: {
-    color: "#442484",
-  },
+  btnCloseSessionTitle: {},
 });

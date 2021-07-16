@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { ActivityIndicator } from "react-native";
+import { ActivityIndicator, Image } from "react-native";
 import { StyleSheet, View } from "react-native";
 import { Marker } from "react-native-maps";
 import { getCurrentLocation } from "../../../../utils/helpers";
 import Markers from "./Markers";
 import MapView from "react-native-map-clustering";
+import { COLORS, SCREEN_HEIGHT } from "../../../../theme";
 
 const Clustering = ({ currentLocation, data, loading }) => {
   const getMarkerLocation = () => {
@@ -30,9 +31,31 @@ const Clustering = ({ currentLocation, data, loading }) => {
             longitudeDelta: 0.05,
           }}
           showsUserLocation
+          clusterColor={COLORS.primary}
         >
           {getMarkerLocation().map((item, i) => (
-            <Marker key={i} coordinate={item} />
+            <Marker key={i} coordinate={item} pinColor={COLORS.secondary}>
+              <View
+                style={{
+                  alignItems: "center",
+                  backgroundColor: COLORS.primary,
+                  borderRadius: SCREEN_HEIGHT * 0.02,
+                  width: SCREEN_HEIGHT * 0.04,
+                  height: SCREEN_HEIGHT * 0.04,
+                  justifyContent: "center",
+                }}
+              >
+                <Image
+                  source={require("../../../../assets/Informacionwhite.png")}
+                  style={{
+                    color: COLORS.primary,
+                    borderRadius: SCREEN_HEIGHT * 0.0175,
+                    height: SCREEN_HEIGHT * 0.035,
+                    width: SCREEN_HEIGHT * 0.035,
+                  }}
+                />
+              </View>
+            </Marker>
           ))}
         </MapView>
       )}

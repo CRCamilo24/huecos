@@ -62,23 +62,24 @@ const TakePhoto = ({
   }, [isFocused]);
 
   useEffect(() => {
-    showCamera &&
-      (async () => {
-        try {
-          const { status } = await Camera.requestPermissionsAsync();
-          console.log(status);
-          if (status === "granted") {
-            setShowCamera(true);
-            setHasPermission(status === "granted");
-          } else {
-            Alert.alert("Acceso denegado");
-            setShowCamera(false);
-            navigation.navigate("reports");
-          }
-        } catch (error) {
-          alert(error);
+    const getPermission = async () => {
+      try {
+        const { status } = await Camera.requestPermissionsAsync();
+        console.log(status);
+        if (status === "granted") {
+          setShowCamera(true);
+          setHasPermission(status === "granted");
+        } else {
+          Alert.alert("Acceso denegado");
+          setShowCamera(false);
+          navigation.navigate("reports");
         }
-      })();
+      } catch (error) {
+        alert(error);
+      }
+    };
+
+    showCamera && getPermission();
   }, [showCamera]);
 
   if (hasPermission === null) {

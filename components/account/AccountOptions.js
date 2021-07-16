@@ -7,6 +7,7 @@ import Modal from "../Modal";
 import ChangeDisplayNameForm from "./ChangeDisplayNameForm";
 import ChangeEmailForm from "./ChangeEmailForm";
 import ChangePasswordForm from "./ChangePasswordForm";
+import { COLORS, SCREEN_HEIGHT } from "../../theme";
 
 export default function AccountOptions({ user, toastRef, setRelodUser }) {
   const [showModal, setShowModal] = useState(false);
@@ -76,16 +77,31 @@ export default function AccountOptions({ user, toastRef, setRelodUser }) {
   const menuOptions = generateOptions();
 
   return (
-    <View>
+    <View style={{ marginHorizontal: SCREEN_HEIGHT * 0.03 }}>
       {map(menuOptions, (menu, index) => (
-        <ListItem key={index} style={styles.menuItem} onPress={menu.onPress}>
+        <ListItem
+          key={index}
+          style={[
+            styles.menuItem,
+            { borderColor: COLORS.secondary, backgroundColor: "transparent" },
+          ]}
+          containerStyle={{
+            backgroundColor: "transparent",
+          }}
+          onPress={menu.onPress}
+          underlayColor={COLORS.gray}
+        >
           <Icon
             type="material-community"
             name={menu.iconNameLeft}
             color={menu.iconColorLeft}
           />
           <ListItem.Content>
-            <ListItem.Title>{menu.title}</ListItem.Title>
+            <ListItem.Title
+              style={{ color: COLORS.secondary, fontWeight: "700" }}
+            >
+              {menu.title}
+            </ListItem.Title>
           </ListItem.Content>
           <Icon
             type="material-community"
@@ -104,6 +120,6 @@ export default function AccountOptions({ user, toastRef, setRelodUser }) {
 const styles = StyleSheet.create({
   menuItem: {
     borderBottomWidth: 1,
-    borderBottomColor: "#a7bfd3",
+    // borderBottomColor: "#a7bfd3",
   },
 });

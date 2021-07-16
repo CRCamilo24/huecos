@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Alert, StyleSheet, Text, View } from "react-native";
 import { Avatar } from "react-native-elements";
+import { COLORS, FONT_SIZE } from "../../theme";
 
 import { updateProfile, uploadImage } from "../../utils/actions";
 import { loadImageFromGallery } from "../../utils/helpers";
@@ -53,10 +54,27 @@ export default function InfoUser({ user, setLoading, setLoadingText }) {
         }
       />
       <View style={styles.infoUser}>
-        <Text style={styles.displayName}>
+        <Text
+          style={[
+            styles.displayName,
+            {
+              color: COLORS.secondary,
+              fontSize: FONT_SIZE.normal,
+              fontWeight: "700",
+            },
+          ]}
+        >
           {user.displayName ? user.displayName : "Anónimo"}
         </Text>
-        <Text>{user.email ? user.email : "Correo"}</Text>
+        <Text
+          style={{
+            color: COLORS.secondary,
+            fontSize: FONT_SIZE.small,
+            fontWeight: "600",
+          }}
+        >
+          {user.email ? user.email : "Correo"}
+        </Text>
       </View>
     </View>
   );
@@ -66,7 +84,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "row",
-    backgroundColor: "#f9f9f9",
+    // backgroundColor: "#f9f9f9",
     paddingVertical: 30,
   },
   infoUser: {
@@ -74,6 +92,7 @@ const styles = StyleSheet.create({
   },
   displayName: {
     fontWeight: "bold",
+
     paddingBottom: 5,
   },
 });

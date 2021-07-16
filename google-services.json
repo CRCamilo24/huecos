@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:419454009226:android:8c3ff59509a85f47ad1273",
         "android_client_info": {
-          "package_name": "com.valorizacionapp"
+          "package_name": "com.valorizacionapp.reparar"
         }
       },
       "oauth_client": [
@@ -17,7 +17,7 @@
           "client_id": "419454009226-bs1c8npg7t2a597s7fekhv2me7t5rl6n.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.valorizacionapp",
+            "package_name": "com.valorizacionapp.reparar",
             "certificate_hash": "5e5c409ab030d75b22aec502d8257b57f1c9296a"
           }
         },
@@ -42,7 +42,7 @@
               "client_id": "419454009226-fss5ib8gondgj6ni0bkbf3nctpg4vd79.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.valorizacionapp"
+                "bundle_id": "com.valorizacionapp.reparar"
               }
             }
           ]

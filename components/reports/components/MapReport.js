@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { Image, StyleSheet, Text, View } from "react-native";
 import MapView from "react-native-maps";
 import { getCurrentLocation } from "../../../utils/helpers";
 import Modal from "../../Modal";
@@ -48,7 +48,48 @@ function MapReport({
               }}
               pinColor={COLORS.secondary}
               draggable
-            />
+            >
+              <View
+                style={{
+                  borderRadius: SCREEN_HEIGHT * 0.03,
+                  height: SCREEN_HEIGHT * 0.06,
+                  width: SCREEN_HEIGHT * 0.06,
+                }}
+              >
+                <Image
+                  source={require("../../../assets/tabBar/Reportes.png")}
+                  style={{
+                    color: COLORS.primary,
+                    borderRadius: SCREEN_HEIGHT * 0.03,
+                    height: SCREEN_HEIGHT * 0.06,
+                    width: SCREEN_HEIGHT * 0.06,
+                  }}
+                  resizeMode="contain"
+                />
+                <View
+                  style={{
+                    alignItems: "center",
+                    backgroundColor: COLORS.primary,
+                    borderRadius: SCREEN_HEIGHT * 0.0125,
+                    width: SCREEN_HEIGHT * 0.025,
+                    height: SCREEN_HEIGHT * 0.025,
+                    justifyContent: "center",
+                    position: "absolute",
+                    marginTop: SCREEN_HEIGHT * 0.03,
+                  }}
+                >
+                  <Image
+                    source={require("../../../assets/Informacionwhite.png")}
+                    style={{
+                      color: COLORS.primary,
+                      borderRadius: SCREEN_HEIGHT * 0.01,
+                      height: SCREEN_HEIGHT * 0.02,
+                      width: SCREEN_HEIGHT * 0.02,
+                    }}
+                  />
+                </View>
+              </View>
+            </MapView.Marker>
           </MapView>
         )}
         <View style={styles.viewMapBtn}>

@@ -18,12 +18,20 @@ WebBrowser.maybeCompleteAuthSession();
 
 export default function Login() {
   const navigation = useNavigation();
-  const [{ authUser, loading }, { signInWithGoogle }] = useAuthContext();
+  const [{ authUser, loading }, { setAuthUser }] = useAuthContext();
 
   const [request, response, promptAsync] = Google.useIdTokenAuthRequest({
     behavior: "web",
-    clientId:
+    expoClientId:
       "849721799436-5k6jqs7h1bkptqujjaiqango8ntri8j9.apps.googleusercontent.com",
+    // iosClientId: "GOOGLE_GUID.apps.googleusercontent.com",
+    androidClientId:
+      "849721799436-786e0b6meh28ed1l25k355trmt4n8g0n.apps.googleusercontent.com",
+    webClientId:
+      "849721799436-5k6jqs7h1bkptqujjaiqango8ntri8j9.apps.googleusercontent.com",
+
+    // clientId:
+    //   "849721799436-5k6jqs7h1bkptqujjaiqango8ntri8j9.apps.googleusercontent.com",
   });
 
   useEffect(() => {
@@ -33,7 +41,8 @@ export default function Login() {
         const credential = await firebase.auth.GoogleAuthProvider.credential(
           id_token
         );
-        await firebase.auth().signInWithCredential(credential);
+        const userInfo = await firebase.auth().signInWithCredential(credential);
+        setAuthUser(userInfo.user);
       };
       getUser();
     }
