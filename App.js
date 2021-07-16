@@ -3,6 +3,8 @@ import Navigation from "./navigations/Navigation";
 import { LogBox } from "react-native";
 import { firebaseApp } from "./utils/firebase";
 import { useAuthContext } from "./components/context/AuthContext";
+import { View } from "react-native";
+import { SCREEN_HEIGHT } from "./screens/reports/AddReport";
 
 LogBox.ignoreAllLogs();
 export default function App() {
@@ -26,5 +28,15 @@ export default function App() {
     return subscriber; // unsubscribe on unmount
   }, []);
 
-  return <Navigation />;
+  return (
+    <View
+      style={{
+        flex: 1,
+        backgroundColor: "white",
+        paddingTop: SCREEN_HEIGHT * 0.04,
+      }}
+    >
+      <Navigation />
+    </View>
+  );
 }

@@ -38,7 +38,7 @@ export default function Search() {
   );
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "#3c73f4" }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
       <View style={styles.generalContainer}>
         <View style={styles.newsCointainer}>
           {!loading && (
@@ -62,7 +62,7 @@ export default function Search() {
 const styles = StyleSheet.create({
   generalContainer: {
     flex: 1,
-    backgroundColor: "#3c73f4",
+    backgroundColor: "white",
     height: height * 0.9,
   },
   container: {

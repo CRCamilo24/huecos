@@ -3,15 +3,41 @@ import { StyleSheet, Text, View, Image } from "react-native";
 import { Divider } from "react-native-elements";
 import { useNavigation } from "@react-navigation/native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-
 import LoginForm from "../../components/account/LoginForm";
 import { useAuthContext } from "../../components/context/AuthContext";
 import { useEffect } from "react";
 import GoogleButton from "./GoogleButton";
+import * as Google from "expo-auth-session/providers/google";
+import * as firebase from "firebase";
+import * as WebBrowser from "expo-web-browser";
+import { SCREEN_HEIGHT } from "../reports/AddReport";
+import { COLORS } from "../../theme";
+import { ImageBackground } from "react-native";
+
+WebBrowser.maybeCompleteAuthSession();
 
 export default function Login() {
   const navigation = useNavigation();
   const [{ authUser, loading }, { signInWithGoogle }] = useAuthContext();
+
+  const [request, response, promptAsync] = Google.useIdTokenAuthRequest({
+    behavior: "web",
+    clientId:
+      "849721799436-5k6jqs7h1bkptqujjaiqango8ntri8j9.apps.googleusercontent.com",
+  });
+
+  useEffect(() => {
+    if (response?.type === "success") {
+      const { id_token } = response.params;
+      const getUser = async () => {
+        const credential = await firebase.auth.GoogleAuthProvider.credential(
+          id_token
+        );
+        await firebase.auth().signInWithCredential(credential);
+      };
+      getUser();
+    }
+  }, [response]);
 
   useEffect(() => {
     authUser && !loading && navigation.navigate("account");
@@ -19,19 +45,26 @@ export default function Login() {
   });
 
   return (
-    <KeyboardAwareScrollView>
-      <Image
-        source={require("../../assets/logoalcaldia.png")}
-        resizeMode="contain"
-        style={styles.image}
-      />
-      <View style={styles.container}>
-        <LoginForm />
-
-        <GoogleButton onPress={() => signInWithGoogle()} />
-        <CreateAccount />
-      </View>
-      <Divider style={styles.divider} />
+    <KeyboardAwareScrollView style={{ backgroundColor: "white" }}>
+      <ImageBackground
+        style={{ height: SCREEN_HEIGHT }}
+        source={require("../../assets/app-12.png")}
+      >
+        <Image
+          // source={{
+          //   uri: "https://firebasestorage.googleapis.com/v0/b/valorizacionapp.appspot.com/o/Source%2FLOGOS-02.png?alt=media&token=6a6fcc14-2f68-4f54-9829-7e6295af4922",
+          // }}
+          source={require("../../assets/LOGOS-02.png")}
+          resizeMode="contain"
+          style={styles.image}
+        />
+        <View style={styles.container}>
+          <LoginForm />
+          <GoogleButton onPress={() => promptAsync()} />
+          <CreateAccount />
+        </View>
+        {/* <Divider style={styles.divider} /> */}
+      </ImageBackground>
     </KeyboardAwareScrollView>
   );
 }
@@ -52,11 +85,14 @@ function CreateAccount(props) {
 
 const styles = StyleSheet.create({
   image: {
+    // borderWidth: 1,
     height: 150,
     width: "100%",
-    marginBottom: 20,
+    marginTop: SCREEN_HEIGHT * 0.08,
   },
   container: {
+    // borderWidth: 1,
+    height: SCREEN_HEIGHT * 0.5,
     marginHorizontal: 40,
   },
   divider: {
@@ -64,12 +100,13 @@ const styles = StyleSheet.create({
     margin: 40,
   },
   register: {
+    color: COLORS.secondary,
     marginTop: 15,
     marginHorizontal: 10,
     alignSelf: "center",
   },
   btnRegister: {
-    color: "#442484",
+    color: COLORS.primary,
     fontWeight: "bold",
   },
 });

@@ -35,7 +35,7 @@ const actions = {
 
         // console.log("data:-ReportsContext", data);
       } catch (error) {
-        setState({ loading: false, error });
+        setState({ data: null, loading: false, error: true });
         console.log("error:-ReportsContext", error);
       }
     },

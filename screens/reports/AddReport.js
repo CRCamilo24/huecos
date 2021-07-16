@@ -10,6 +10,7 @@ import Toast from "react-native-easy-toast";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import Loading from "../../components/Loading";
 import AddReportForm from "../../components/reports/AddReportForm";
+import { COLORS } from "../../theme";
 
 export const SCREEN_WIDTH = Dimensions.get("screen").width;
 export const SCREEN_HEIGHT = Dimensions.get("screen").height;
@@ -25,7 +26,11 @@ export default function AddReport({ navigation }) {
   }, [showCamera]);
 
   return (
-    <KeyboardAwareScrollView scrollEnabled={!showCamera} ref={scroll}>
+    <KeyboardAwareScrollView
+      scrollEnabled={!showCamera}
+      ref={scroll}
+      style={{ backgroundColor: COLORS.white }}
+    >
       <AddReportForm
         toastRef={toastRef}
         setLoading={setLoading}

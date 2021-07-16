@@ -1,32 +1,14 @@
-import React, { useState } from "react";
-import { TextInput } from "react-native";
+import React from "react";
+import { useState } from "react";
 import { Pressable, Text, View } from "react-native";
 import { COLORS, FONT_SIZE, SCREEN_HEIGHT } from "../../theme";
 
-const Notes = ({ navigation }) => {
+const AnotherNotes = ({ navigation }) => {
+  const [understood, setUnderstood] = useState(false);
+
   return (
     <View style={{ alignItems: "center", height: "100%" }}>
       <View style={{ width: "80%", padding: "5%", marginTop: "5%" }}>
-        <Text
-          style={{
-            color: COLORS.secondary,
-            fontSize: SCREEN_HEIGHT * 0.03,
-            fontWeight: "700",
-          }}
-        >
-          Instructivo
-        </Text>
-        <Text
-          style={{
-            color: COLORS.secondary,
-            fontSize: FONT_SIZE.normal,
-            fontWeight: "600",
-            width: "85%",
-          }}
-        >
-          Tenga en cuenta las siguientes recomendaciones al momento de su
-          reporte
-        </Text>
         <View
           style={{
             flexDirection: "row",
@@ -52,10 +34,37 @@ const Notes = ({ navigation }) => {
               width: "85%",
             }}
           >
-            Asegúrese de que lasfotografías sean claras, tomadas en condiciones
-            de buena iluminación asociados a problemas en la malla vial de Pasto
-            Por favor no envíes fotos que No correspondan a la problemática
-            asociada de este aplicativo
+            Una vez seleccionada la imagen, complete el formulario para
+            identificar la zona a la cual corresponde el reporte.
+          </Text>
+        </View>
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "flex-start",
+            flexWrap: "wrap",
+            marginTop: SCREEN_HEIGHT * 0.1,
+            flex: 1,
+          }}
+        >
+          <Text
+            style={{
+              fontSize: SCREEN_HEIGHT * 0.04,
+              color: COLORS.secondary,
+            }}
+          >
+            {"\u2022" + " "}
+          </Text>
+          <Text
+            style={{
+              color: COLORS.secondary,
+              fontSize: FONT_SIZE.normal,
+              fontWeight: "600",
+              marginTop: SCREEN_HEIGHT * 0.015,
+              width: "85%",
+            }}
+          >
+            Estableza de manera adecuada la ubicación mediante mapa.
           </Text>
         </View>
         <View
@@ -64,7 +73,7 @@ const Notes = ({ navigation }) => {
             alignItems: "flex-start",
             flexWrap: "wrap",
             flex: 1,
-            marginTop: SCREEN_HEIGHT * 0.22,
+            marginTop: SCREEN_HEIGHT * 0.1,
           }}
         >
           <Text
@@ -84,8 +93,38 @@ const Notes = ({ navigation }) => {
               width: "85%",
             }}
           >
-            Las fotos que no muestren claramente la problemática descrita, serán
-            rechazadas
+            Asegúrese de diligenciar todos los campos y oprima el botón de
+            enviar reporte.
+          </Text>
+        </View>
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "flex-start",
+            flexWrap: "wrap",
+            flex: 1,
+            marginTop: SCREEN_HEIGHT * 0.1,
+          }}
+        >
+          <Text
+            style={{
+              fontSize: SCREEN_HEIGHT * 0.04,
+              color: COLORS.secondary,
+            }}
+          >
+            {"\u2022" + " "}
+          </Text>
+          <Text
+            style={{
+              color: COLORS.secondary,
+              fontSize: FONT_SIZE.normal,
+              fontWeight: "600",
+              marginTop: SCREEN_HEIGHT * 0.015,
+              width: "85%",
+            }}
+          >
+            Reportes de señalizacióm, alcantarillado y/o problemas que no
+            correspondan a este aplicativo NO serán tenidos en cuenta.
           </Text>
         </View>
         <View style={{ width: "100%", alignItems: "center" }}>
@@ -104,7 +143,7 @@ const Notes = ({ navigation }) => {
                 backgroundColor: pressed ? COLORS.primaryDeg : COLORS.primary,
               },
             ]}
-            onPress={() => navigation.navigate("another-notes")}
+            onPress={() => setUnderstood(true)}
           >
             <Text
               style={{
@@ -117,12 +156,45 @@ const Notes = ({ navigation }) => {
             </Text>
           </Pressable>
         </View>
+        <View style={{ width: "100%", alignItems: "center" }}>
+          <Pressable
+            style={({ pressed }) => [
+              {
+                alignItems: "center",
+                borderRadius: SCREEN_HEIGHT * 0.05,
+                // borderWidth: 1,
+                height: SCREEN_HEIGHT * 0.05,
+                justifyContent: "center",
+                marginTop: "10%",
+                width: "100%",
+              },
+              {
+                backgroundColor:
+                  pressed || !understood
+                    ? COLORS.secondaryDeg
+                    : COLORS.secondary,
+              },
+            ]}
+            onPress={() => navigation.navigate("add-report")}
+            disabled={!understood}
+          >
+            <Text
+              style={{
+                color: COLORS.white,
+                fontSize: FONT_SIZE.large,
+                fontWeight: "700",
+              }}
+            >
+              Continuar con el reporte
+            </Text>
+          </Pressable>
+        </View>
       </View>
     </View>
   );
 };
 
-export default Notes;
+export default AnotherNotes;
 {
   /* <Text
 style={{

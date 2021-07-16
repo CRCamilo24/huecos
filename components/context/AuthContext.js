@@ -1,16 +1,25 @@
 import { createStore, createHook } from "react-sweet-state";
-import * as Google from "expo-google-app-auth";
+// import * as Google from "expo-google-app-auth";
 import { firebaseApp } from "../../utils/firebase";
 import * as firebase from "firebase";
+// import { ResponseType } from "expo-auth-session";
+import * as WebBrowser from "expo-web-browser";
 
-const config = {
-  // expoClientId: `849721799436-j1lds7oij2cq3u1ivjbc1hquuadh7mie.apps.googleusercontent.com`,
-  // expoClientId: `419454009226-t6cls7pag073dqib4lh0ep64dcujrpk2.apps.googleusercontent.com`,
-  // iosClientId: `<YOUR_IOS_CLIENT_ID>`,
-  androidClientId:
-    "849721799436-i9qhbfn3fd3v5pu3o54u7hk9gh4e3e98.apps.googleusercontent.com",
-  scopes: ["profile", "email"],
-};
+// const androidClientId =
+//   "849721799436-786e0b6meh28ed1l25k355trmt4n8g0n.apps.googleusercontent.com";
+
+// const config = {
+//   // expoClientId:
+//   //   "849721799436-j1lds7oij2cq3u1ivjbc1hquuadh7mie.apps.googleusercontent.com",
+//   iosClientId: `<YOUR_IOS_CLIENT_ID>`,
+//   // "849721799436-i9qhbfn3fd3v5pu3o54u7hk9gh4e3e98.apps.googleusercontent.com",
+//   androidClientId:
+//     "849721799436-786e0b6meh28ed1l25k355trmt4n8g0n.apps.googleusercontent.com", // con otro package name
+//   // androidClientId:
+//   //   "849721799436-lq6kceq8l9cliel4mrfb12q3h4oqqhak.apps.googleusercontent.com", // host.exponent
+
+//   scopes: ["profile", "email"],
+// };
 
 const initialState = {
   authUser: null,
@@ -27,33 +36,6 @@ const actions = {
       });
     },
 
-  signInWithGoogle:
-    (authUser) =>
-    async ({ setState }) => {
-      try {
-        const { type, accessToken, user, idToken } = await Google.logInAsync(
-          config
-        );
-
-        if (type === "success") {
-          const credential = await firebase.auth.GoogleAuthProvider.credential(
-            idToken,
-            accessToken
-          );
-
-          const userInfo = await firebaseApp
-            .auth()
-            .signInWithCredential(credential);
-          setAuthUser({
-            authUser: userInfo.user,
-            loading: false,
-          });
-        }
-      } catch (error) {
-        console.log("error-AuthContext:", error);
-      }
-    },
-
   // signInWithEmailAndPassword:
   //   ({ email, password }) =>
   //   async () => {
@@ -67,3 +49,16 @@ const Store = createStore({
 });
 
 export const useAuthContext = createHook(Store);
+
+// const config = {
+//   // expoClientId:
+//   //   "849721799436-j1lds7oij2cq3u1ivjbc1hquuadh7mie.apps.googleusercontent.com",
+//   // iosClientId: `<YOUR_IOS_CLIENT_ID>`,
+//   // "849721799436-i9qhbfn3fd3v5pu3o54u7hk9gh4e3e98.apps.googleusercontent.com",
+//   androidClientId:
+//     "849721799436-786e0b6meh28ed1l25k355trmt4n8g0n.apps.googleusercontent.com",
+//   // androidClientId:
+//   //   "849721799436-lq6kceq8l9cliel4mrfb12q3h4oqqhak.apps.googleusercontent.com",
+
+//   scopes: ["profile", "email"],
+// };

@@ -6,9 +6,7 @@ import { getCurrentLocation } from "../../../../utils/helpers";
 import Markers from "./Markers";
 import MapView from "react-native-map-clustering";
 
-const Clustering = ({ data, loading }) => {
-  const [currentLocation, setCurrentLocation] = useState(null);
-
+const Clustering = ({ currentLocation, data, loading }) => {
   const getMarkerLocation = () => {
     const points = data
       .map((item) => item.location)
@@ -20,20 +18,6 @@ const Clustering = ({ data, loading }) => {
       });
     return points;
   };
-
-  // const isMarker = getMarkerLocation().map((item, i) => (
-  //   <Marker key={i} coordinate={item} />
-  // ));
-
-  useEffect(() => {
-    (async () => {
-      const response = await getCurrentLocation();
-      if (response.status) {
-        setCurrentLocation(response.location);
-        // console.log("response.location:-Clustering", response.location);
-      }
-    })();
-  }, [loading]);
 
   return (
     <View style={styles.container}>
@@ -50,8 +34,31 @@ const Clustering = ({ data, loading }) => {
           {getMarkerLocation().map((item, i) => (
             <Marker key={i} coordinate={item} />
           ))}
-          {/* <Markers data={data} loading={loading} /> */}
-          {/* <Marker
+        </MapView>
+      )}
+      {!currentLocation && <ActivityIndicator size="large" color="#442484" />}
+    </View>
+  );
+};
+
+export default Clustering;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+  },
+  map: {
+    width: "100%",
+    height: "100%",
+  },
+});
+
+{
+  /* <Markers data={data} loading={loading} /> */
+}
+{
+  /* <Marker
             coordinate={{
               latitude: -9.938030444037494,
               longitude: -76.25186568582463,
@@ -92,23 +99,5 @@ const Clustering = ({ data, loading }) => {
               latitude: -9.932400070195445,
               longitude: -76.25002865097814,
             }}
-          /> */}
-        </MapView>
-      )}
-      {!currentLocation && <ActivityIndicator size="large" color="#442484" />}
-    </View>
-  );
-};
-
-export default Clustering;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-  },
-  map: {
-    width: "100%",
-    height: "100%",
-  },
-});
+          /> */
+}

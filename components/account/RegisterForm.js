@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { Button, Icon, Input } from "react-native-elements";
 import { size } from "lodash";
 import { useNavigation } from "@react-navigation/native";
@@ -7,6 +7,8 @@ import { useNavigation } from "@react-navigation/native";
 import { validateEmail } from "../../utils/helpers";
 import { getCurrentUser, registerUser } from "../../utils/actions";
 import Loading from "../Loading";
+import { COLORS, FONT_SIZE, SCREEN_HEIGHT } from "../../theme";
+import { Pressable } from "react-native";
 
 export default function RegisterForm() {
   const [showPassword, setShowPassword] = useState(false);
@@ -75,8 +77,9 @@ export default function RegisterForm() {
   return (
     <View style={styles.form}>
       <Input
-        containerStyle={styles.input}
-        placeholder="Ingresa tu email..."
+        containerStyle={[styles.input]}
+        label="Ingresa tu email..."
+        labelStyle={{ color: COLORS.secondary, fontSize: FONT_SIZE.normal }}
         onChange={(e) => onChange(e, "email")}
         keyboardType="email-address"
         errorMessage={errorEmail}
@@ -84,7 +87,8 @@ export default function RegisterForm() {
       />
       <Input
         containerStyle={styles.input}
-        placeholder="Ingresa tu contraseña..."
+        label="Ingresa tu contraseña..."
+        labelStyle={{ color: COLORS.secondary, fontSize: FONT_SIZE.normal }}
         password={true}
         secureTextEntry={!showPassword}
         onChange={(e) => onChange(e, "password")}
@@ -101,7 +105,8 @@ export default function RegisterForm() {
       />
       <Input
         containerStyle={styles.input}
-        placeholder="Confirma tu contraseña..."
+        label="Confirma tu contraseña..."
+        labelStyle={{ color: COLORS.secondary, fontSize: FONT_SIZE.normal }}
         password={true}
         secureTextEntry={!showPassword}
         onChange={(e) => onChange(e, "confirm")}
@@ -116,12 +121,38 @@ export default function RegisterForm() {
           />
         }
       />
-      <Button
+      <Pressable
+        style={({ pressed }) => [
+          {
+            alignItems: "center",
+            borderRadius: SCREEN_HEIGHT * 0.05,
+            height: SCREEN_HEIGHT * 0.05,
+            justifyContent: "center",
+            marginVertical: SCREEN_HEIGHT * 0.015,
+            width: "80%",
+          },
+          {
+            backgroundColor: pressed ? COLORS.primaryDeg : COLORS.primary,
+          },
+        ]}
+        onPress={() => doregisterUser()}
+      >
+        <Text
+          style={{
+            color: COLORS.white,
+            fontSize: FONT_SIZE.normal,
+            fontWeight: "700",
+          }}
+        >
+          REGISTRAR NUEVO USUARIO
+        </Text>
+      </Pressable>
+      {/* <Button
         title="Registrar Nuevo Usuario"
         containerStyle={styles.btnContainer}
         buttonStyle={styles.btn}
         onPress={() => doregisterUser()}
-      />
+      /> */}
       <Loading isVisible={Loading} text="Creando Cuenta" />
     </View>
   );
@@ -133,14 +164,19 @@ const defaultFormValues = () => {
 
 const styles = StyleSheet.create({
   form: {
+    // borderWidth: 1,
+    // flex: 1,
+    height: SCREEN_HEIGHT * 0.4,
+    alignItems: "center",
+    justifyContent: "center",
     marginTop: 30,
   },
   input: {
-    width: "100%",
+    width: "80%",
   },
   btnContainer: {
     marginTop: 20,
-    width: "95%",
+    width: "80%",
     alignSelf: "center",
   },
   btn: {

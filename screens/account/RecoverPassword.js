@@ -6,14 +6,16 @@ import {
   Pressable,
   Text,
   TextInput,
+  Image,
   View,
 } from "react-native";
-import { Image } from "react-native-elements";
+
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { firebaseApp } from "../../utils/firebase";
 import { validateEmail } from "../../utils/helpers";
 import { SCREEN_HEIGHT, SCREEN_WIDTH } from "../reports/AddReport";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { COLORS, FONT_SIZE } from "../../theme";
 
 const RecoverPasswordPage = ({ navigation }) => {
   const [submitted, setSubmitted] = useState(false);
@@ -36,7 +38,7 @@ const RecoverPasswordPage = ({ navigation }) => {
         {send ? (
           <View style={{ alignItems: "center" }}>
             <Image
-              source={require("../../assets/logoalcaldia.png")}
+              source={require("../../assets/Informacion.png")}
               resizeMode="contain"
               style={{
                 height: SCREEN_HEIGHT * 0.2,
@@ -78,7 +80,7 @@ const RecoverPasswordPage = ({ navigation }) => {
         ) : (
           <View style={{ alignItems: "center" }}>
             <Image
-              source={require("../../assets/logoalcaldia.png")}
+              source={require("../../assets/Informacion.png")}
               resizeMode="contain"
               style={{
                 height: SCREEN_HEIGHT * 0.2,
@@ -127,13 +129,25 @@ const RecoverPasswordPage = ({ navigation }) => {
             )}
             <TouchableOpacity
               style={{
-                backgroundColor: "#442484",
-                padding: SCREEN_HEIGHT * 0.009,
-                marginBottom: SCREEN_HEIGHT * 0.05,
+                alignItems: "center",
+                backgroundColor: COLORS.primary,
+                borderRadius: SCREEN_HEIGHT * 0.05,
+                height: SCREEN_HEIGHT * 0.05,
+                justifyContent: "center",
+                marginVertical: SCREEN_HEIGHT * 0.015,
+                width: SCREEN_WIDTH * 0.75,
               }}
               onPress={onSubmit}
             >
-              <Text style={{ color: "white" }}>Restablecer contraseña</Text>
+              <Text
+                style={{
+                  color: COLORS.white,
+                  fontSize: FONT_SIZE.normal,
+                  fontWeight: "700",
+                }}
+              >
+                Restablecer contraseña
+              </Text>
             </TouchableOpacity>
           </View>
         )}

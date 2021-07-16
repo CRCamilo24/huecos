@@ -2,40 +2,58 @@ import React, { useEffect } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { Icon } from "react-native-elements";
 import firebase from "firebase/app";
-
-import Loading from "../../components/Loading";
 import Clustering from "../../components/reports/components/Clustering/Clustering";
 import { useState } from "react";
 import { ReportsContext } from "../../components/context/ReportsContext";
-// import { useIsFocused } from "@react-navigation/native";
+import { useIsFocused } from "@react-navigation/native";
+import { getCurrentLocation } from "../../utils/helpers";
+import { ActivityIndicator } from "react-native";
+import { COLORS } from "../../theme";
 
 export default function Reports({ navigation }) {
   const [user, setUser] = useState(null);
+  const [currentLocation, setCurrentLocation] = useState(null);
   const [{ data, loading }, { getReports }] = ReportsContext();
-  // const isFocused = useIsFocused();
+  const isFocused = useIsFocused();
+
+  const callFunction = async () => {
+    const response = await getCurrentLocation();
+    if (response.status) {
+      setCurrentLocation(response.location);
+    }
+    await getReports({ collection: "reports" });
+  };
 
   useEffect(() => {
     firebase.auth().onAuthStateChanged((userInfo) => {
       userInfo ? setUser(true) : setUser(false);
     });
-    getReports({ collection: "reports" });
-  }, []);
 
-  if (loading) {
-    return <Loading isVisible={true} text="Cargando..." />;
+    callFunction();
+  }, [isFocused]);
+
+  if (loading || !currentLocation) {
+    return (
+      <View style={{ flex: 1, justifyContent: "center" }}>
+        <ActivityIndicator size="large" color="#442484" />
+      </View>
+    );
   }
 
   return (
     <View style={styles.viewBody}>
-      {/* {loading && <Text>Reportes...</Text>} */}
-      {!loading && (
-        <Clustering getReports={getReports} loading={loading} data={data} />
-      )}
+      {/* {!loading && ( */}
+      <Clustering
+        loading={loading}
+        data={data}
+        currentLocation={currentLocation}
+      />
+      {/* )} */}
       {user && (
         <Icon
           type="material-community"
           name="plus"
-          color="#442484"
+          color={COLORS.secondary}
           reverse
           containerStyle={styles.btnContainer}
           onPress={() => navigation.navigate("notes")}

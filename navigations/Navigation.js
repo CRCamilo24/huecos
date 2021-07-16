@@ -7,6 +7,8 @@ import FavoriteStack from "./FavoriteStack";
 import ReportsStack from "./ReportsStack";
 import SearchStack from "./SearchStack";
 import TopReportsStack from "./TopReportsStack";
+import { COLORS, SCREEN_HEIGHT } from "../theme";
+import { Image } from "react-native";
 
 const Tab = createBottomTabNavigator();
 
@@ -15,24 +17,33 @@ export default function Navigation() {
     let iconName;
     switch (route.name) {
       case "reports":
-        iconName = "compass-outline";
+        iconName = `https://firebasestorage.googleapis.com/v0/b/valorizacionapp.appspot.com/o/Source%2FReportes.png?alt=media&token=162b461a-94d4-4018-86c6-b1bd63744a00`;
         break;
-      case "favorites":
-        iconName = "heart-outline";
+      case "info":
+        iconName =
+          "https://firebasestorage.googleapis.com/v0/b/valorizacionapp.appspot.com/o/Source%2FInformacion.png?alt=media&token=92bd3afc-cad9-47f7-8c1a-521bd610d9cc";
         break;
-      case "reports":
-        iconName = "star-outline";
+      case "historial":
+        iconName =
+          "https://firebasestorage.googleapis.com/v0/b/valorizacionapp.appspot.com/o/Source%2FHistorial.png?alt=media&token=57d528a7-82f5-43dc-8d42-da78fa076ac7";
         break;
       case "search":
-        iconName = "magnify";
+        iconName =
+          "https://firebasestorage.googleapis.com/v0/b/valorizacionapp.appspot.com/o/Source%2FNoticias.png?alt=media&token=cfe71106-e2fb-4de2-89ce-6e30639df6e4";
         break;
       case "account":
-        iconName = "home-outline";
+        iconName =
+          "https://firebasestorage.googleapis.com/v0/b/valorizacionapp.appspot.com/o/Source%2FPerfil.png?alt=media&token=11443ffe-7fc9-4d74-ae92-bb83c8b85989";
         break;
     }
 
     return (
-      <Icon type="material-community" name={iconName} size={22} color={color} />
+      <Image
+        key={iconName}
+        source={{ uri: iconName }}
+        style={{ height: SCREEN_HEIGHT * 0.03, width: SCREEN_HEIGHT * 0.3 }}
+        resizeMode="contain"
+      />
     );
   };
   return (
@@ -40,8 +51,8 @@ export default function Navigation() {
       <Tab.Navigator
         initialRouteName="reports"
         tabBarOptions={{
-          inactiveTintColor: "#a17dc3",
-          activeTintColor: "#442484",
+          inactiveTintColor: COLORS.secondaryDeg,
+          activeTintColor: COLORS.secondary,
         }}
         screenOptions={({ route }) => ({
           tabBarIcon: ({ color }) => screenOptions(route, color),

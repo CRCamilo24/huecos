@@ -16,8 +16,8 @@ const actions = {
         .collection(collection)
         .orderBy("date", "desc")
         .get()
-        .then((querySnapshot) => {
-          querySnapshot.forEach((doc) => {
+        .then((item) => {
+          item.forEach((doc) => {
             const dataNew = doc.data();
             const newResumeData = {
               titleNews: dataNew.title,

@@ -16,6 +16,8 @@ import UploadImage from "./components/UploadImage";
 import FormAdd from "./components/FormAdd";
 import { PictureContext } from "../context/PictureContext";
 import { ReportsContext } from "../context/ReportsContext";
+import { SCREEN_HEIGHT } from "../../screens/reports/AddReport";
+import { COLORS, FONT_SIZE } from "../../theme";
 
 export default function AddReportForm({
   toastRef,
@@ -170,8 +172,21 @@ export default function AddReportForm({
       {!showCamera && (
         <Button
           title="Crear Reporte"
+          titleStyle={{
+            color: COLORS.white,
+            fontSize: FONT_SIZE.large,
+            fontWeight: "700",
+            letterSpacing: 0.5,
+          }}
           onPress={addReport}
-          buttonStyle={styles.btnAddReport}
+          buttonStyle={[
+            styles.btnAddReport,
+            {
+              marginTop: SCREEN_HEIGHT * 0.009,
+              backgroundColor: COLORS.primary,
+              borderRadius: SCREEN_HEIGHT * 0.05,
+            },
+          ]}
         />
       )}
       <MapReport
@@ -204,7 +219,7 @@ const styles = StyleSheet.create({
 
   btnAddReport: {
     margin: 20,
-    marginTop: 40,
-    backgroundColor: "#442484",
+
+    // backgroundColor: "#442484",
   },
 });

@@ -8,6 +8,8 @@ import Loading from "../Loading";
 import { validateEmail } from "../../utils/helpers";
 import { loginWithEmailAndPassword } from "../../utils/actions";
 import { SCREEN_WIDTH } from "../../screens/reports/AddReport";
+import { COLORS, FONT_SIZE, SCREEN_HEIGHT } from "../../theme";
+import { Pressable } from "react-native";
 
 export default function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
@@ -22,7 +24,7 @@ export default function LoginForm() {
     setFormData({ ...formData, [type]: e.nativeEvent.text });
   };
 
-  doLogin = async () => {
+  const doLogin = async () => {
     if (!validateData()) {
       return;
     }
@@ -66,20 +68,35 @@ export default function LoginForm() {
     <View style={styles.container}>
       <Input
         containerStyle={styles.input}
-        placeholder="Ingresa tu email..."
         onChange={(e) => onChange(e, "email")}
         keyboardType="email-address"
         errorMessage={errorEmail}
         defaultValue={formData.email}
+        label="Ingresa a tu email..."
+        labelStyle={{
+          color: COLORS.secondary,
+          letterSpacing: 0.3,
+          fontSize: FONT_SIZE.normal,
+        }}
+        inputContainerStyle={{
+          borderBottomWidth: 1,
+          borderColor: COLORS.secondary,
+        }}
       />
       <Input
         containerStyle={styles.input}
-        placeholder="Ingresa tu contraseña..."
+        // placeholder="Ingresa tu contraseña..."
+        label="Ingresa tu contraseña..."
+        labelStyle={{ color: COLORS.secondary, fontSize: FONT_SIZE.normal }}
         password={true}
         secureTextEntry={!showPassword}
         onChange={(e) => onChange(e, "password")}
         errorMessage={errorPassword}
         defaultValue={formData.password}
+        inputContainerStyle={{
+          borderBottomWidth: 1,
+          borderColor: COLORS.secondary,
+        }}
         rightIcon={
           <Icon
             type="material-community"
@@ -99,12 +116,33 @@ export default function LoginForm() {
       >
         ¿Olvidó su contraseña?
       </Text>
-      <Button
-        title="Iniciar Sesión"
-        containerStyle={styles.btnContainer}
-        buttonStyle={styles.btn}
+      <Pressable
+        style={({ pressed }) => [
+          {
+            alignItems: "center",
+            borderRadius: SCREEN_HEIGHT * 0.05,
+            height: SCREEN_HEIGHT * 0.05,
+            justifyContent: "center",
+            marginVertical: SCREEN_HEIGHT * 0.015,
+            width: "85%",
+          },
+          {
+            backgroundColor: pressed ? COLORS.primaryDeg : COLORS.primary,
+          },
+        ]}
         onPress={() => doLogin()}
-      />
+      >
+        <Text
+          style={{
+            color: COLORS.white,
+            fontSize: FONT_SIZE.normal,
+            fontWeight: "700",
+          }}
+        >
+          INICIAR SESIÓN
+        </Text>
+      </Pressable>
+
       <Loading isVisible={Loading} text="Iniciando Sesión" />
     </View>
   );

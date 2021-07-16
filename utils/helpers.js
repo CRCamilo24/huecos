@@ -11,7 +11,9 @@ export function validateEmail(email) {
 
 export const loadImageFromGallery = async (array) => {
   const response = { status: false, image: null };
-  const resultPermissions = await Permissions.askAsync(Permissions.CAMERA);
+  const resultPermissions = await Permissions.askAsync(
+    Permissions.MEDIA_LIBRARY
+  );
   console.log("resultPermissions:", resultPermissions);
   if (resultPermissions.status === "denied") {
     Alert.alert(
@@ -38,20 +40,48 @@ export const fileToBlob = async (path) => {
 };
 
 export const getCurrentLocation = async () => {
+  // console.log("status:", status);
+
   const response = { status: false, location: null };
-  const resultPermissions = await Permissions.askAsync(Permissions.LOCATION);
-  if (resultPermissions.status === "denied") {
-    Alert.alert("Debes dar permisos para la localización.");
+  try {
+    const { status } = await Location.requestForegroundPermissionsAsync();
+
+    if (status !== "granted") {
+      Alert.alert("Debes dar permisos para la localización.");
+      return;
+    } else {
+      const position = await Location.getCurrentPositionAsync({});
+      const location = {
+        latitude: position.coords.latitude,
+        longitude: position.coords.longitude,
+        latitudeDelta: 0.001,
+        longitudeDelta: 0.001,
+      };
+      response.status = true;
+      response.location = location;
+    }
+    return response;
+  } catch (error) {
+    Alert.alert("Error:-getCurrentLocation-helper", error.message);
     return response;
   }
-  const position = await Location.getCurrentPositionAsync({});
-  const location = {
-    latitude: position.coords.latitude,
-    longitude: position.coords.longitude,
-    latitudeDelta: 0.001,
-    longitudeDelta: 0.001,
-  };
-  response.status = true;
-  response.location = location;
-  return response;
+
+  // const response = { status: false, location: null };
+  // const resultPermissions = await Permissions.askAsync(
+  //   Permissions.LOCATION_FOREGROUND
+  // );
+  // if (resultPermissions.status === "denied") {
+  //   Alert.alert("Debes dar permisos para la localización.");
+  //   return;
+  // } else {
+  //   const position = await Location.getCurrentPositionAsync({});
+  //   const location = {
+  //     latitude: position.coords.latitude,
+  //     longitude: position.coords.longitude,
+  //     latitudeDelta: 0.001,
+  //     longitudeDelta: 0.001,
+  //   };
+  //   response.status = true;
+  //   response.location = location;
+  // }
 };

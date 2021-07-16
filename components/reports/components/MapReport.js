@@ -4,6 +4,7 @@ import MapView from "react-native-maps";
 import { getCurrentLocation } from "../../../utils/helpers";
 import Modal from "../../Modal";
 import { Button } from "react-native-elements";
+import { COLORS, SCREEN_HEIGHT } from "../../../theme";
 
 function MapReport({
   isVisibleMap,
@@ -45,6 +46,7 @@ function MapReport({
                 latitude: newRegion.latitude,
                 longitude: newRegion.longitude,
               }}
+              pinColor={COLORS.secondary}
               draggable
             />
           </MapView>
@@ -53,13 +55,21 @@ function MapReport({
           <Button
             title="Guardar ubicación"
             containerStyle={styles.viewMapContainerSave}
-            buttonStyle={styles.viewMapBtnSave}
+            buttonStyle={{
+              backgroundColor: COLORS.secondary,
+              borderRadius: SCREEN_HEIGHT * 0.05,
+              paddingHorizontal: SCREEN_HEIGHT * 0.02,
+            }}
             onPress={confirmLocation}
           />
           <Button
             title="Cancelar ubicación"
             containerStyle={styles.viewMapContainerCancel}
-            buttonStyle={styles.viewMapBtnCancel}
+            buttonStyle={{
+              backgroundColor: COLORS.primary,
+              borderRadius: SCREEN_HEIGHT * 0.05,
+              paddingHorizontal: SCREEN_HEIGHT * 0.02,
+            }}
             onPress={() => setIsVisibleMap(false)}
           />
         </View>
@@ -78,7 +88,7 @@ const styles = StyleSheet.create({
 
   viewMapBtn: {
     flexDirection: "row",
-    justifyContent: "center",
+    justifyContent: "space-around",
     marginTop: 10,
   },
 

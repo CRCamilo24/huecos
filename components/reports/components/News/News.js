@@ -9,6 +9,7 @@ import {
   TouchableHighlight,
   Linking,
 } from "react-native";
+import { COLORS, FONT_SIZE, SCREEN_HEIGHT } from "../../../../theme";
 
 const { height, width } = Dimensions.get("screen");
 
@@ -20,18 +21,65 @@ const News = ({ urlImage, titleNews, newsResume, linkTitle, link }) => {
   };
   return (
     <View style={styles.container}>
-      <View>
-        <Image style={styles.imageStyle} source={imgNews} />
-      </View>
-      <View style={styles.textContainer}>
-        {titleNews && <Text style={styles.title}>{titleNews}</Text>}
-        {newsResume && <Text style={styles.resume}>{newsResume}</Text>}
+      <Image style={styles.imageStyle} source={imgNews} />
+      <View
+        style={{
+          width: "45%",
+          height: "90%",
+          // borderWidth: 1,
+          // paddingVertical: SCREEN_HEIGHT * 0.01,
+          justifyContent: "space-between",
+        }}
+      >
+        <View>
+          {titleNews && (
+            <Text
+              style={{
+                width: "95%",
+                color: COLORS.secondary,
+                fontSize: FONT_SIZE.normal,
+                fontWeight: "700",
+                marginHorizontal: SCREEN_HEIGHT * 0.009,
+              }}
+              numberOfLines={3}
+            >
+              {titleNews}
+            </Text>
+          )}
+          {newsResume && (
+            <Text
+              style={{
+                width: "90%",
+                color: COLORS.secondary,
+                fontSize: SCREEN_HEIGHT * 0.009,
+                marginHorizontal: SCREEN_HEIGHT * 0.01,
+              }}
+              numberOfLines={2}
+            >
+              {newsResume}
+            </Text>
+          )}
+        </View>
         {linkTitle && (
           <TouchableHighlight
             onPress={_handleOpenWithLinking}
             underlayColor="#936abd"
+            style={{
+              backgroundColor: COLORS.primary,
+
+              alignItems: "flex-end",
+              paddingRight: SCREEN_HEIGHT * 0.01,
+            }}
           >
-            <Text style={styles.textTerms}>{linkTitle}</Text>
+            <Text
+              style={{
+                color: COLORS.white,
+                fontWeight: "700",
+                fontSize: SCREEN_HEIGHT * 0.015,
+              }}
+            >
+              Mas información
+            </Text>
           </TouchableHighlight>
         )}
       </View>
@@ -41,11 +89,11 @@ const News = ({ urlImage, titleNews, newsResume, linkTitle, link }) => {
 
 const styles = StyleSheet.create({
   container: {
-    justifyContent: "center",
-    flexDirection: "column",
+    alignItems: "center",
+    // justifyContent: "center",
+    flexDirection: "row",
     backgroundColor: "white",
     width: width * 0.85,
-    borderRadius: 30,
     shadowColor: "rgba(0,0,0, .4)",
     shadowOffset: { height: 1, width: 1 },
     shadowOpacity: 1,
@@ -53,19 +101,20 @@ const styles = StyleSheet.create({
     elevation: 4,
     marginTop: height * 0.033,
     marginHorizontal: width * 0.08,
+    height: height * 0.2,
   },
   imageStyle: {
-    maxWidth: width * 0.85,
-    maxHeight: height * 0.2,
-    borderTopLeftRadius: 30,
-    borderTopRightRadius: 30,
-    height: height * 0.18,
+    // borderTopLeftRadius: 30,
+    // borderTopRightRadius: 30,
+    marginLeft: SCREEN_HEIGHT * 0.009,
+    height: "90%",
+    width: "50%",
     resizeMode: "cover",
   },
   textContainer: {
-    marginHorizontal: 18,
-    marginBottom: 15,
-    marginTop: 10,
+    // marginHorizontal: 18,
+    // marginBottom: 15,
+    // marginTop: 10,
   },
   title: {
     fontSize: height * 0.025,
@@ -78,7 +127,7 @@ const styles = StyleSheet.create({
   textTerms: {
     fontSize: height * 0.014,
     fontWeight: "700",
-    textDecorationLine: "underline",
+    // textDecorationLine: "underline",
   },
 });
 
