@@ -1,23 +1,74 @@
 import React, { useEffect, useState } from "react";
-import { ActivityIndicator, Image } from "react-native";
-import { StyleSheet, View } from "react-native";
-import { Marker } from "react-native-maps";
+import { ActivityIndicator, Image, StyleSheet, View } from "react-native";
+import { Callout, Marker } from "react-native-maps";
 import { getCurrentLocation } from "../../../../utils/helpers";
 import Markers from "./Markers";
 import MapView from "react-native-map-clustering";
 import { COLORS, SCREEN_HEIGHT } from "../../../../theme";
+import { useAuthContext } from "../../../context/AuthContext";
+import { Alert } from "react-native";
 
-const Clustering = ({ currentLocation, data, loading }) => {
+export const CustomMarker = ({ item }) => (
+  <View
+    style={{
+      alignItems: "center",
+      backgroundColor: item.status ? COLORS.secondary : COLORS.primary,
+      borderRadius: SCREEN_HEIGHT * 0.02,
+      width: SCREEN_HEIGHT * 0.04,
+      height: SCREEN_HEIGHT * 0.04,
+      justifyContent: "center",
+    }}
+  >
+    <Image
+      source={require("../../../../assets/Informacionwhite.png")}
+      style={{
+        borderRadius: SCREEN_HEIGHT * 0.0175,
+        height: SCREEN_HEIGHT * 0.035,
+        width: SCREEN_HEIGHT * 0.035,
+      }}
+    />
+  </View>
+);
+
+const Clustering = ({ currentLocation, data, loading, updateCollection }) => {
+  const [{ authUser }, {}] = useAuthContext();
+
+  const isAdmin =
+    authUser && authUser.email === "valorizacionapppasto@gmail.com";
+
   const getMarkerLocation = () => {
-    const points = data
-      .map((item) => item.location)
-      .map((element) => {
-        return {
-          latitude: element.latitude.toFixed(9) * 1,
-          longitude: element.longitude.toFixed(9) * 1,
-        };
-      });
+    const points = data.map((item) => {
+      return {
+        id: item.id_doc,
+        location: item.location,
+        status: item.status,
+      };
+    });
     return points;
+  };
+  console.log("isAdmin:", isAdmin);
+
+  const updateReport = (item) => {
+    const findReport = data.find((element) => element.id_doc === item.id);
+    console.log("item:", item);
+
+    Alert.alert("Actualizar Reporte", "¿Desea actualizar el reporte?", [
+      {
+        text: "Cancel",
+        onPress: () => console.log("Cancel Pressed"),
+        style: "cancel",
+      },
+      {
+        text: "OK",
+        onPress: () => {
+          updateCollection({
+            collection: "reports",
+            idDoc: item.id,
+            body: { ...findReport, status: !item.status },
+          });
+        },
+      },
+    ]);
   };
 
   return (
@@ -34,27 +85,14 @@ const Clustering = ({ currentLocation, data, loading }) => {
           clusterColor={COLORS.primary}
         >
           {getMarkerLocation().map((item, i) => (
-            <Marker key={i} coordinate={item} pinColor={COLORS.secondary}>
-              <View
-                style={{
-                  alignItems: "center",
-                  backgroundColor: COLORS.primary,
-                  borderRadius: SCREEN_HEIGHT * 0.02,
-                  width: SCREEN_HEIGHT * 0.04,
-                  height: SCREEN_HEIGHT * 0.04,
-                  justifyContent: "center",
-                }}
-              >
-                <Image
-                  source={require("../../../../assets/Informacionwhite.png")}
-                  style={{
-                    color: COLORS.primary,
-                    borderRadius: SCREEN_HEIGHT * 0.0175,
-                    height: SCREEN_HEIGHT * 0.035,
-                    width: SCREEN_HEIGHT * 0.035,
-                  }}
-                />
-              </View>
+            <Marker
+              key={i}
+              coordinate={item.location}
+              pinColor={COLORS.secondary}
+              onPress={() => isAdmin && updateReport(item)}
+              // tracksViewChanges={false}
+            >
+              <CustomMarker item={item} />
             </Marker>
           ))}
         </MapView>

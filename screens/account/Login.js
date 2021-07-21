@@ -1,6 +1,5 @@
 import React from "react";
 import { StyleSheet, Text, View, Image } from "react-native";
-import { Divider } from "react-native-elements";
 import { useNavigation } from "@react-navigation/native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import LoginForm from "../../components/account/LoginForm";
@@ -13,26 +12,58 @@ import * as WebBrowser from "expo-web-browser";
 import { SCREEN_HEIGHT } from "../reports/AddReport";
 import { COLORS } from "../../theme";
 import { ImageBackground } from "react-native";
+import { getRedirectUrl, makeRedirectUri, startAsync } from "expo-auth-session";
 
 WebBrowser.maybeCompleteAuthSession();
 
 export default function Login() {
   const navigation = useNavigation();
-  const [{ authUser, loading }, { setAuthUser }] = useAuthContext();
+  const [{ authUser, loading }, { setAuthUser, signInWithGoogle }] =
+    useAuthContext();
+
+  let redirectUrl = makeRedirectUri({
+    scheme: "huecos",
+    path: "redirect",
+    // useProxy: true,
+  });
+  console.log("redirectUrl:", redirectUrl);
 
   const [request, response, promptAsync] = Google.useIdTokenAuthRequest({
-    behavior: "web",
+    // behavior: "web",
     expoClientId:
       "849721799436-5k6jqs7h1bkptqujjaiqango8ntri8j9.apps.googleusercontent.com",
     // iosClientId: "GOOGLE_GUID.apps.googleusercontent.com",
     androidClientId:
       "849721799436-786e0b6meh28ed1l25k355trmt4n8g0n.apps.googleusercontent.com",
-    webClientId:
-      "849721799436-5k6jqs7h1bkptqujjaiqango8ntri8j9.apps.googleusercontent.com",
-
-    // clientId:
+    // webClientId:
     //   "849721799436-5k6jqs7h1bkptqujjaiqango8ntri8j9.apps.googleusercontent.com",
+    // clientId:
+    //   "419454009226-t6cls7pag073dqib4lh0ep64dcujrpk2.apps.googleusercontent.com",
+    // redirectUri: "https://auth.expo.io/@valorizacionapppasto/huecos",
   });
+
+  const start = async () => {
+    const result = await startAsync({
+      authUrl:
+        "https://accounts.google.com/o/oauth2/v2/auth?nonce=5b60af4a495c4260ea9b0f257b018c9265ef1baf03735a10f6e5c402176cf641&redirect_uri=https%3A%2F%2Fauth.expo.io%2F%40valorizacionapppasto%2Fhuecos&client_id=849721799436-5k6jqs7h1bkptqujjaiqango8ntri8j9.apps.googleusercontent.com&response_type=id_token&state=iuLseJCNlr&scope=openid%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email",
+      returnUrl: "https://auth.expo.io/@valorizacionapppasto/huecos",
+      returnUrl: redirectUrl,
+    });
+
+    if (result?.type === "success") {
+      const { id_token } = result.params;
+      const getUser = async () => {
+        const credential = await firebase.auth.GoogleAuthProvider.credential(
+          id_token
+        );
+
+        await firebase.auth().signInWithCredential(credential);
+      };
+      getUser();
+    } else {
+      alert("Inicio de sesión cancelado");
+    }
+  };
 
   useEffect(() => {
     if (response?.type === "success") {
@@ -41,7 +72,9 @@ export default function Login() {
         const credential = await firebase.auth.GoogleAuthProvider.credential(
           id_token
         );
+
         const userInfo = await firebase.auth().signInWithCredential(credential);
+
         setAuthUser(userInfo.user);
       };
       getUser();
@@ -69,7 +102,8 @@ export default function Login() {
         />
         <View style={styles.container}>
           <LoginForm />
-          <GoogleButton onPress={() => promptAsync()} />
+          <GoogleButton onPress={() => start()} />
+          {/* <GoogleButton onPress={() => signInWithGoogle()} /> */}
           <CreateAccount />
         </View>
         {/* <Divider style={styles.divider} /> */}

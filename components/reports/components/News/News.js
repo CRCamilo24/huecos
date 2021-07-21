@@ -13,14 +13,28 @@ import { COLORS, FONT_SIZE, SCREEN_HEIGHT } from "../../../../theme";
 
 const { height, width } = Dimensions.get("screen");
 
-const News = ({ urlImage, titleNews, newsResume, linkTitle, link }) => {
+const News = ({
+  urlImage,
+  titleNews,
+  newsResume,
+  linkTitle,
+  link,
+  index,
+  news,
+}) => {
   const imgNews = { uri: urlImage };
   // eslint-disable-next-line no-underscore-dangle
   const _handleOpenWithLinking = () => {
     Linking.openURL(link);
   };
+
   return (
-    <View style={styles.container}>
+    <View
+      style={[
+        styles.container,
+        { marginBottom: news.length - 1 === index ? SCREEN_HEIGHT * 0.01 : 0 },
+      ]}
+    >
       <Image style={styles.imageStyle} source={imgNews} />
       <View
         style={{

@@ -27,14 +27,20 @@ export default function Search() {
     isFocused && obtainNews();
   }, [isFocused]);
 
-  const renderNews = ({ item }) => (
-    <News
-      urlImage={item.url}
-      titleNews={item.titleNews}
-      newsResume={item.newsResume}
-      link={item.link}
-      linkTitle={item.linkTitle}
-    />
+  const renderNews = ({ item, index }) => (
+    console.log("index:", index),
+    (
+      <News
+        key={index}
+        urlImage={item.url}
+        titleNews={item.titleNews}
+        newsResume={item.newsResume}
+        link={item.link}
+        linkTitle={item.linkTitle}
+        index={index}
+        news={news}
+      />
+    )
   );
 
   return (

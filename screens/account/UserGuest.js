@@ -11,6 +11,7 @@ import {
 import { Button } from "react-native-elements";
 import { useNavigation } from "@react-navigation/native";
 import { COLORS, FONT_SIZE, SCREEN_HEIGHT } from "../../theme";
+import { AppState } from "react-native";
 
 export default function UserGuest() {
   const navigation = useNavigation();

@@ -2,18 +2,21 @@ import React, { useEffect } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { Icon } from "react-native-elements";
 import firebase from "firebase/app";
-import Clustering from "../../components/reports/components/Clustering/Clustering";
+import Clustering, {
+  CustomMarker,
+} from "../../components/reports/components/Clustering/Clustering";
 import { useState } from "react";
 import { ReportsContext } from "../../components/context/ReportsContext";
 import { useIsFocused } from "@react-navigation/native";
 import { getCurrentLocation } from "../../utils/helpers";
 import { ActivityIndicator } from "react-native";
-import { COLORS } from "../../theme";
+import { COLORS, SCREEN_HEIGHT, SCREEN_WIDTH } from "../../theme";
 
 export default function Reports({ navigation }) {
   const [user, setUser] = useState(null);
   const [currentLocation, setCurrentLocation] = useState(null);
-  const [{ data, loading }, { getReports }] = ReportsContext();
+  const [{ data, loading }, { getReports, updateCollection }] =
+    ReportsContext();
   const isFocused = useIsFocused();
 
   const callFunction = async () => {
@@ -22,6 +25,7 @@ export default function Reports({ navigation }) {
       setCurrentLocation(response.location);
     }
     await getReports({ collection: "reports" });
+    console.log("ejecutó!");
   };
 
   useEffect(() => {
@@ -30,7 +34,7 @@ export default function Reports({ navigation }) {
     });
 
     callFunction();
-  }, [isFocused]);
+  }, [isFocused, loading, user]);
 
   if (loading || !currentLocation) {
     return (
@@ -47,6 +51,7 @@ export default function Reports({ navigation }) {
         loading={loading}
         data={data}
         currentLocation={currentLocation}
+        updateCollection={updateCollection}
       />
       {/* )} */}
       {user && (
@@ -59,6 +64,35 @@ export default function Reports({ navigation }) {
           onPress={() => navigation.navigate("notes")}
         />
       )}
+
+      <View style={{ position: "absolute", marginLeft: SCREEN_WIDTH * 0.03 }}>
+        <View
+          style={{ flexDirection: "row", marginVertical: SCREEN_HEIGHT * 0.01 }}
+        >
+          <CustomMarker item={{ status: true }} />
+          <Text
+            style={{
+              textAlignVertical: "center",
+              marginLeft: SCREEN_WIDTH * 0.009,
+              fontWeight: "700",
+            }}
+          >
+            Reparado
+          </Text>
+        </View>
+        <View style={{ flexDirection: "row" }}>
+          <CustomMarker item={{ status: false }} />
+          <Text
+            style={{
+              textAlignVertical: "center",
+              marginLeft: SCREEN_WIDTH * 0.009,
+              fontWeight: "700",
+            }}
+          >
+            Sin reparar
+          </Text>
+        </View>
+      </View>
     </View>
   );
 }

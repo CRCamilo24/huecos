@@ -3,6 +3,7 @@
     "name": "huecos",
     "slug": "huecos",
     "version": "1.0.0",
+    "scheme": "huecos",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
