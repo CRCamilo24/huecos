@@ -38,7 +38,12 @@ export default function Reports({ navigation }) {
 
   if (loading || !currentLocation) {
     return (
-      <View style={{ flex: 1, justifyContent: "center" }}>
+      <View
+        style={{
+          flex: 1,
+          justifyContent: "center",
+        }}
+      >
         <ActivityIndicator size="large" color="#442484" />
       </View>
     );

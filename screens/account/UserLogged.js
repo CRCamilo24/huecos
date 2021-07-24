@@ -30,50 +30,60 @@ export default function UserLogged() {
       style={styles.container}
       source={require("../../assets/app-12.png")}
     >
-      <ImageBackground
-        source={require("../../assets/Informacion.png")}
+      <View
         style={{
-          //   borderWidth: 1,
-          alignItems: "center",
-          height: "35%",
+          height: "30%",
           width: "100%",
-          position: "absolute",
-          marginTop: SCREEN_HEIGHT * 0.03,
-          zIndex: 1,
+          // borderWidth: 1,
+          justifyContent: "flex-end",
         }}
-        resizeMethod="resize"
-        resizeMode="contain"
       >
-        <Text
+        <ImageBackground
+          source={require("../../assets/Informacion.png")}
           style={{
             // borderWidth: 1,
-            // position: "absolute",
-            color: COLORS.secondary,
-            fontSize: SCREEN_HEIGHT * 0.03,
-            fontWeight: "700",
-            textAlign: "left",
-            marginTop: SCREEN_HEIGHT * 0.085,
+            alignItems: "center",
+            height: "70%",
+            width: "100%",
+            position: "absolute",
+            marginTop: SCREEN_HEIGHT * 0.03,
+            zIndex: 1,
           }}
+          resizeMethod="resize"
+          resizeMode="contain"
         >
-          REPARA
-        </Text>
-        <Text
-          style={{
-            // borderWidth: 1,
-            color: COLORS.secondary,
-            fontSize: SCREEN_HEIGHT * 0.01,
-            fontWeight: "700",
-            textAlign: "left",
-            //   marginBottom: SCREEN_HEIGHT * 0.8,
-            marginLeft: "9%",
-            width: "18%",
-          }}
-        >
-          Red participativa de reparación y acción
-        </Text>
-      </ImageBackground>
+          <Text
+            style={{
+              // borderWidth: 1,
+              // position: "absolute",
+              color: COLORS.secondary,
+              fontSize: SCREEN_HEIGHT * 0.03,
+              fontWeight: "700",
+              textAlign: "left",
+              marginTop: SCREEN_HEIGHT * 0.11,
+            }}
+          >
+            REPARA
+          </Text>
+          <Text
+            style={{
+              // borderWidth: 1,
+              color: COLORS.secondary,
+              fontSize: SCREEN_HEIGHT * 0.01,
+              fontWeight: "700",
+              textAlign: "left",
+              //   marginBottom: SCREEN_HEIGHT * 0.8,
+              marginLeft: "9%",
+              width: "18%",
+            }}
+          >
+            Red participativa de reparación y acción
+          </Text>
+        </ImageBackground>
+      </View>
+
       {user && (
-        <View style={{ marginTop: SCREEN_HEIGHT * 0.2 }}>
+        <View style={{}}>
           <InfoUser
             user={user}
             setLoading={setLoading}

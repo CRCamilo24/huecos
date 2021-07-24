@@ -27,8 +27,8 @@ const CustomHeader = ({ title }) => {
           style={{
             alignItems: "center",
             // borderRightWidth: 1,
-            flex: 1,
-            height: "65%",
+            // flex: 1,
+            height: SCREEN_HEIGHT * 0.065,
             // justifyContent: "flex-end",
             width: "100%",
           }}
@@ -65,7 +65,7 @@ const CustomHeader = ({ title }) => {
       <View
         style={{
           borderRightWidth: 1,
-          height: "90%",
+          height: SCREEN_HEIGHT * 0.09,
           borderColor: COLORS.secondary,
         }}
       />

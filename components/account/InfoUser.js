@@ -10,6 +10,8 @@ export default function InfoUser({ user, setLoading, setLoadingText }) {
   //console.log(user)
   const [photoUrl, setPhotoUrl] = useState(user.photoURL);
   const changePhoto = async () => {
+    console.log("pressed");
+
     const result = await loadImageFromGallery([1, 1]);
     //console.log(result)
     if (!result.status) {

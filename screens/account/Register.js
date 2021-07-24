@@ -7,7 +7,10 @@ import { SCREEN_HEIGHT } from "../../theme";
 
 export default function Register() {
   return (
-    <KeyboardAwareScrollView style={{ backgroundColor: "white" }}>
+    <KeyboardAwareScrollView
+      style={{ backgroundColor: "white" }}
+      keyboardShouldPersistTaps="always"
+    >
       <ImageBackground
         style={{ height: SCREEN_HEIGHT }}
         source={require("../../assets/app-12.png")}

@@ -7,6 +7,10 @@ import MapView from "react-native-map-clustering";
 import { COLORS, SCREEN_HEIGHT } from "../../../../theme";
 import { useAuthContext } from "../../../context/AuthContext";
 import { Alert } from "react-native";
+import { Pressable } from "react-native";
+import { Text } from "react-native";
+import { ImageBackground } from "react-native";
+import { TouchableOpacity } from "react-native";
 
 export const CustomMarker = ({ item }) => (
   <View
@@ -31,6 +35,7 @@ export const CustomMarker = ({ item }) => (
 );
 
 const Clustering = ({ currentLocation, data, loading, updateCollection }) => {
+  const [showImage, setShowImage] = useState(null);
   const [{ authUser }, {}] = useAuthContext();
 
   const isAdmin =
@@ -40,6 +45,7 @@ const Clustering = ({ currentLocation, data, loading, updateCollection }) => {
     const points = data.map((item) => {
       return {
         id: item.id_doc,
+        image: item.images[0],
         location: item.location,
         status: item.status,
       };
@@ -50,25 +56,27 @@ const Clustering = ({ currentLocation, data, loading, updateCollection }) => {
 
   const updateReport = (item) => {
     const findReport = data.find((element) => element.id_doc === item.id);
-    console.log("item:", item);
+    console.log("item:", item.image);
+    setShowImage(item.image);
 
-    Alert.alert("Actualizar Reporte", "¿Desea actualizar el reporte?", [
-      {
-        text: "Cancel",
-        onPress: () => console.log("Cancel Pressed"),
-        style: "cancel",
-      },
-      {
-        text: "OK",
-        onPress: () => {
-          updateCollection({
-            collection: "reports",
-            idDoc: item.id,
-            body: { ...findReport, status: !item.status },
-          });
+    isAdmin &&
+      Alert.alert("Actualizar Reporte", "¿Desea actualizar el reporte?", [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel",
         },
-      },
-    ]);
+        {
+          text: "OK",
+          onPress: () => {
+            updateCollection({
+              collection: "reports",
+              idDoc: item.id,
+              body: { ...findReport, status: !item.status },
+            });
+          },
+        },
+      ]);
   };
 
   return (
@@ -89,13 +97,58 @@ const Clustering = ({ currentLocation, data, loading, updateCollection }) => {
               key={i}
               coordinate={item.location}
               pinColor={COLORS.secondary}
-              onPress={() => isAdmin && updateReport(item)}
+              onPress={() => updateReport(item)}
               // tracksViewChanges={false}
             >
               <CustomMarker item={item} />
             </Marker>
           ))}
         </MapView>
+      )}
+
+      {showImage && (
+        <View
+          // source={{ uri: showImage }}
+          style={{
+            alignItems: "center",
+            backgroundColor: "rgba(0,0,0,0.4)",
+            // backgroundColor: COLORS.secondary,
+            // height: SCREEN_HEIGHT * 0.5,
+            height: SCREEN_HEIGHT * 0.7,
+            // flex: 1,
+            position: "absolute",
+            justifyContent: "flex-start",
+            width: SCREEN_HEIGHT * 0.5,
+          }}
+          resizeMode="contain"
+        >
+          <TouchableOpacity
+            style={{
+              borderColor: "white",
+              borderRadius: SCREEN_HEIGHT * 0.005,
+              borderWidth: SCREEN_HEIGHT * 0.002,
+              justifyContent: "center",
+              margin: SCREEN_HEIGHT * 0.005,
+              // marginBottom: SCREEN_HEIGHT / 15,
+              padding: SCREEN_HEIGHT * 0.015,
+            }}
+            onPress={() => setShowImage(null)}
+          >
+            <Text
+              style={{
+                fontSize: SCREEN_HEIGHT * 0.018,
+                color: "white",
+              }}
+            >
+              Cerrar
+            </Text>
+          </TouchableOpacity>
+          <Image
+            source={{ uri: showImage }}
+            style={{ height: "80%", width: "100%" }}
+            resizeMode="contain"
+          />
+        </View>
       )}
       {!currentLocation && <ActivityIndicator size="large" color="#442484" />}
     </View>
@@ -106,6 +159,7 @@ export default Clustering;
 
 const styles = StyleSheet.create({
   container: {
+    alignItems: "center",
     flex: 1,
     justifyContent: "center",
   },
