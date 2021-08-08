@@ -59,7 +59,7 @@ export default function Favorite() {
       </ImageBackground>
 
       <Image
-        source={require("../assets/Fondo1.png")}
+        source={require("../assets/Fondo3.png")}
         style={{
           height: "100%",
           width: "100%",

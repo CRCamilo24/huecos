@@ -9,6 +9,7 @@ import SearchStack from "./SearchStack";
 import TopReportsStack from "./TopReportsStack";
 import { COLORS, SCREEN_HEIGHT } from "../theme";
 import { Image } from "react-native";
+import StreetsStack from "./StreetsStack";
 
 const Tab = createBottomTabNavigator();
 
@@ -18,6 +19,9 @@ export default function Navigation() {
     switch (route.name) {
       case "reports":
         iconName = `https://firebasestorage.googleapis.com/v0/b/valorizacionapp.appspot.com/o/Source%2FReportes.png?alt=media&token=162b461a-94d4-4018-86c6-b1bd63744a00`;
+        break;
+      case "streets":
+        iconName = `https://firebasestorage.googleapis.com/v0/b/valorizacionapp.appspot.com/o/Source%2FCalle.png?alt=media&token=3fc171eb-1ee2-485c-bbe6-98c3d3d8cd57`;
         break;
       case "info":
         iconName =
@@ -67,6 +71,11 @@ export default function Navigation() {
           name="reports"
           component={ReportsStack}
           options={{ title: "Reportes" }}
+        />
+        <Tab.Screen
+          name="streets"
+          component={StreetsStack}
+          options={{ title: "Postular Vías" }}
         />
         <Tab.Screen
           name="info"
