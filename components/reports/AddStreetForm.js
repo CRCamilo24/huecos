@@ -74,6 +74,7 @@ export default function AddStreetForm({
     setPhoto(null);
     setImage(null);
     getReports({ collection: "streets" });
+    setFormData(defaultFormValues());
     navigation.navigate("reports");
   };
   const uploadImages = async () => {
@@ -99,9 +100,7 @@ export default function AddStreetForm({
     } */
 
     if (isEmpty(formData.address)) {
-      setErrorAddress(
-        "Debes ingresar la zona en la que se encuentra la vía."
-      );
+      setErrorAddress("Debes ingresar la zona en la que se encuentra la vía.");
       isValid = false;
     }
 

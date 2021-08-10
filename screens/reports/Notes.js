@@ -52,7 +52,7 @@ const Notes = ({ navigation }) => {
               width: "85%",
             }}
           >
-            Asegúrese de que lasfotografías sean claras, tomadas en condiciones
+            Asegúrese de que las fotografías sean claras, tomadas en condiciones
             de buena iluminación asociados a problemas en la malla vial de Pasto
             Por favor no envíes fotos que No correspondan a la problemática
             asociada de este aplicativo
