@@ -18,29 +18,21 @@ WebBrowser.maybeCompleteAuthSession();
 
 export default function Login() {
   const navigation = useNavigation();
-  const [{ authUser, loading }, { setAuthUser, signInWithGoogle }] =
-    useAuthContext();
+  const [{ authUser, loading }] = useAuthContext();
 
   let redirectUrl = makeRedirectUri({
     scheme: "huecos",
     path: "redirect",
     // useProxy: true,
   });
-  console.log("redirectUrl:", redirectUrl);
+  // console.log("redirectUrl:", redirectUrl);
 
-  const [request, response, promptAsync] = Google.useIdTokenAuthRequest({
-    // behavior: "web",
-    expoClientId:
-      "849721799436-5k6jqs7h1bkptqujjaiqango8ntri8j9.apps.googleusercontent.com",
-    // iosClientId: "GOOGLE_GUID.apps.googleusercontent.com",
-    androidClientId:
-      "849721799436-786e0b6meh28ed1l25k355trmt4n8g0n.apps.googleusercontent.com",
-    // webClientId:
-    //   "849721799436-5k6jqs7h1bkptqujjaiqango8ntri8j9.apps.googleusercontent.com",
-    // clientId:
-    //   "419454009226-t6cls7pag073dqib4lh0ep64dcujrpk2.apps.googleusercontent.com",
-    // redirectUri: "https://auth.expo.io/@valorizacionapppasto/huecos",
-  });
+  // const [request, response, promptAsync] = Google.useIdTokenAuthRequest({
+  //   expoClientId:
+  //     "849721799436-5k6jqs7h1bkptqujjaiqango8ntri8j9.apps.googleusercontent.com",
+  //   androidClientId:
+  //     "849721799436-786e0b6meh28ed1l25k355trmt4n8g0n.apps.googleusercontent.com",
+  // });
 
   const start = async () => {
     const result = await startAsync({
@@ -65,21 +57,21 @@ export default function Login() {
     }
   };
 
-  useEffect(() => {
-    if (response?.type === "success") {
-      const { id_token } = response.params;
-      const getUser = async () => {
-        const credential = await firebase.auth.GoogleAuthProvider.credential(
-          id_token
-        );
+  // useEffect(() => {
+  //   if (response?.type === "success") {
+  //     const { id_token } = response.params;
+  //     const getUser = async () => {
+  //       const credential = await firebase.auth.GoogleAuthProvider.credential(
+  //         id_token
+  //       );
 
-        const userInfo = await firebase.auth().signInWithCredential(credential);
+  //       const userInfo = await firebase.auth().signInWithCredential(credential);
 
-        setAuthUser(userInfo.user);
-      };
-      getUser();
-    }
-  }, [response]);
+  //       setAuthUser(userInfo.user);
+  //     };
+  //     getUser();
+  //   }
+  // }, [response]);
 
   useEffect(() => {
     authUser && !loading && navigation.navigate("account");
